@@ -1,6 +1,6 @@
 import { BsCart3, BsPlus, BsDash, BsTrash } from 'react-icons/bs';
 import { AiOutlineClose } from 'react-icons/ai';
-import type { Product } from '../../types/Product';
+import type { ProductInCart } from '../../types/ProductInCart';
 
 interface CartPopupProps {
   isOpen: boolean;
