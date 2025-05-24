@@ -13,10 +13,6 @@ interface CartPopupProps {
   onContinueShopping: () => void;
 }
 
-export type ProductInCart = Product & {
-  quantity: number;
-};
-
 export default function CartPopup({
   isOpen,
   onClose,

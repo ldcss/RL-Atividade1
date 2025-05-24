@@ -5,7 +5,8 @@ import Navbar from '../../components/Navbar/Navbar';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import { products } from '../../utils/productsData';
 import { useSearchParams } from 'react-router-dom';
-import CartPopup, { type ProductInCart } from '../../components/CartPopup/CartPopup';
+import CartPopup from '../../components/CartPopup/CartPopup';
+import type { ProductInCart } from '../../types/ProductInCart';
 
 export const Home = () => {
   const [searchParams, setSearchParams] = useSearchParams();

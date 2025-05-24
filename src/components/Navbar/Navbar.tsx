@@ -1,15 +1,8 @@
 import { useState } from 'react';
 import { FaRocket, FaHeart, FaShoppingCart, FaUser, FaSearch } from 'react-icons/fa';
+import type { NavbarProps } from '../../types/NavbarProps';
 
-const Navbar = ({
-  cartItems,
-  favItems,
-  onCartClick,
-}: {
-  cartItems: any[];
-  favItems: any[];
-  onCartClick: () => void;
-}) => {
+const Navbar = ({ cartItems, favItems, onCartClick }: NavbarProps) => {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('Todas');
   const [isFavOpen, setIsFavOpen] = useState(false);
@@ -55,27 +48,6 @@ const Navbar = ({
                 </span>
               )}
             </button>
-
-            {/* Popup do wishlist */}
-            {isFavOpen && (
-              <div className='absolute right-0 mt-40 w-64 bg-white text-black rounded shadow-lg z-50'>
-                <div className='p-4'>
-                  <h3 className='font-bold text-lg'>Itens favoritos</h3>
-                  {favItems.length > 0 ? (
-                    <ul className='mt-2'>
-                      {favItems.map((item, index) => (
-                        <li key={index} className='flex justify-between items-center border-b py-2'>
-                          <span>{item.name}</span>
-                          <span className='text-gray-600'>R$ {item.price}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p className='text-gray-600 mt-2'>Sua lista de favoritos está vazia.</p>
-                  )}
-                </div>
-              </div>
-            )}
           </div>
 
           {/* Carrinho */}
