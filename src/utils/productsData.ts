@@ -13,7 +13,7 @@ export const products: Product[] = [
     reviewCount: 124,
     category: 'accessories',
     isFavorite: false,
-    isOnChart: false,
+    isOnCart: false,
   },
   {
     id: 2,
@@ -27,7 +27,7 @@ export const products: Product[] = [
     reviewCount: 88,
     category: 'accessories',
     isFavorite: false,
-    isOnChart: false,
+    isOnCart: false,
   },
   {
     id: 3,
@@ -41,7 +41,7 @@ export const products: Product[] = [
     reviewCount: 212,
     category: 'accessories',
     isFavorite: false,
-    isOnChart: false,
+    isOnCart: false,
   },
   {
     id: 4,
@@ -55,7 +55,7 @@ export const products: Product[] = [
     reviewCount: 321,
     category: 'accessories',
     isFavorite: false,
-    isOnChart: false,
+    isOnCart: false,
   },
   {
     id: 5,
@@ -69,7 +69,7 @@ export const products: Product[] = [
     reviewCount: 54,
     category: 'accessories',
     isFavorite: false,
-    isOnChart: false,
+    isOnCart: false,
   },
   {
     id: 6,
@@ -83,6 +83,6 @@ export const products: Product[] = [
     reviewCount: 77,
     category: 'accessories',
     isFavorite: false,
-    isOnChart: false,
+    isOnCart: false,
   },
 ];

@@ -10,7 +10,7 @@ export interface Product {
   reviewCount: number;
   category: string;
   isFavorite: boolean;
-  isOnChart: boolean;
+  isOnCart: boolean;
   onFavorite?: () => void;
   onAddToCart?: () => void;
 }

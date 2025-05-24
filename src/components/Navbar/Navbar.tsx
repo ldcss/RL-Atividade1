@@ -1,10 +1,17 @@
 import { useState } from 'react';
 import { FaRocket, FaHeart, FaShoppingCart, FaUser, FaSearch } from 'react-icons/fa';
 
-const Navbar = ({ cartItems, favItems }: { cartItems: any[]; favItems: any[] }) => {
+const Navbar = ({
+  cartItems,
+  favItems,
+  onCartClick,
+}: {
+  cartItems: any[];
+  favItems: any[];
+  onCartClick: () => void;
+}) => {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('Todas');
-  const [isCartOpen, setIsCartOpen] = useState(false);
   const [isFavOpen, setIsFavOpen] = useState(false);
 
   const handleSearch = () => {
@@ -73,10 +80,7 @@ const Navbar = ({ cartItems, favItems }: { cartItems: any[]; favItems: any[] }) 
 
           {/* Carrinho */}
           <div className='relative flex items-center'>
-            <button
-              onClick={() => setIsCartOpen(!isCartOpen)}
-              className='text-gray-400 hover:text-white hover:cursor-pointer relative'
-            >
+            <button onClick={onCartClick} className='text-gray-400 hover:text-white hover:cursor-pointer relative'>
               <FaShoppingCart className='text-xl' />
               {cartItems.length >= 0 && (
                 <span className='absolute -top-2 -right-2 bg-red-700 text-white text-xs font-bold rounded-full px-1'>
@@ -84,27 +88,6 @@ const Navbar = ({ cartItems, favItems }: { cartItems: any[]; favItems: any[] }) 
                 </span>
               )}
             </button>
-
-            {/* Popup do carrinho */}
-            {isCartOpen && (
-              <div className='absolute right-0 mt-40 w-64 bg-white text-black rounded shadow-lg z-50'>
-                <div className='p-4'>
-                  <h3 className='font-bold text-lg'>Itens no Carrinho</h3>
-                  {cartItems.length > 0 ? (
-                    <ul className='mt-2'>
-                      {cartItems.map((item, index) => (
-                        <li key={index} className='flex justify-between items-center border-b py-2'>
-                          <span>{item.name}</span>
-                          <span className='text-gray-600'>R$ {item.price}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p className='text-gray-600 mt-2'>Seu carrinho está vazio.</p>
-                  )}
-                </div>
-              </div>
-            )}
           </div>
 
           {/* Perfil */}

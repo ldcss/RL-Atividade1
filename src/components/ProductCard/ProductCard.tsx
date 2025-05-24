@@ -2,11 +2,8 @@ import type { ProductCardProps } from '../../types/ProductCardProps';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { BsCart3 } from 'react-icons/bs';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
-import { useState } from 'react';
 
-const ProductCard = ({ product }: ProductCardProps) => {
-  const [isFavorited, setIsFavorited] = useState(product.isFavorite);
-
+const ProductCard = ({ product, isFavorited, onToggleFavorite }: ProductCardProps) => {
   const renderStars = (rating: number) => {
     const stars = [];
     const fullStars = Math.floor(rating);
@@ -53,10 +50,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
         {/* Favorite Button */}
         <button
-          onClick={() => {
-            product.onFavorite?.();
-            setIsFavorited(prev => !prev);
-          }}
+          onClick={onToggleFavorite}
           className='absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105 hover:cursor-pointer'
         >
           {isFavorited ? (
