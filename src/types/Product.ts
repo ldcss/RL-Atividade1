@@ -1,9 +1,16 @@
-export interface ProductInterface {
+export interface Product {
   id: number;
-  name: string;
+  title: string;
   description: string;
   price: number;
+  originalPrice?: number | null;
   image: string;
   badges: string[];
-  type: string;
+  rating: number;
+  reviewCount: number;
+  category: string;
+  isFavorite: boolean;
+  isOnChart: boolean;
+  onFavorite?: () => void;
+  onAddToCart?: () => void;
 }

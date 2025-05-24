@@ -1,45 +1,109 @@
 import type { ProductCardProps } from '../../types/ProductCardProps';
-import { AiFillHeart } from 'react-icons/ai';
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import { BsCart3 } from 'react-icons/bs';
+import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
+import { useState } from 'react';
 
 const ProductCard = ({ product }: ProductCardProps) => {
+  const [isFavorited, setIsFavorited] = useState(false);
+
+  const handleFavorite = () => {
+    setIsFavorited(!isFavorited);
+    // onFavorite?.();
+  };
+
+  const handleAddToCart = () => {
+    // onAddToCart?.();
+  };
+
+  const renderStars = (rating: number) => {
+    const stars = [];
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 !== 0;
+
+    for (let i = 0; i < 5; i++) {
+      if (i < fullStars) {
+        stars.push(<AiFillStar key={i} className='w-4 h-4 text-yellow-400' />);
+      } else if (i === fullStars && hasHalfStar) {
+        stars.push(
+          <div key={i} className='relative'>
+            <AiOutlineStar className='w-4 h-4 text-gray-300' />
+            <div className='absolute inset-0 overflow-hidden w-1/2'>
+              <AiFillStar className='w-4 h-4 text-yellow-400' />
+            </div>
+          </div>,
+        );
+      } else {
+        stars.push(<AiOutlineStar key={i} className='w-4 h-4 text-gray-300' />);
+      }
+    }
+
+    return stars;
+  };
+
   return (
-    <div className='relative flex flex-col bg-white rounded-lg shadow-md overflow-hidden transform transition-transform duration-300 hover:scale-105 w-64 sm: md:w-80 group'>
-      {/* Imagem do produto */}
+    <div className='bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden max-w-sm mx-auto'>
+      {/* Image Container */}
       <div className='relative'>
-        <img src={product.image} alt={product.name} className='w-full h-50 object-cover object-center rounded-t-lg' />
+        <img
+          src={product.image || '/placeholder.svg'}
+          alt={product.title}
+          className='w-full h-48 sm:h-56 object-cover'
+        />
+
         {/* Badges */}
-        <div className='absolute top-2 left-2 flex gap-2'>
+        <div className='absolute top-3 left-3 flex flex-col gap-1'>
           {product.badges.map((badge, index) => (
-            <span key={index} className='bg-blue-500 text-white text-xs font-semibold px-2 py-1 rounded-full'>
+            <span key={index} className='bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-md shadow-sm'>
               {badge}
             </span>
           ))}
         </div>
-      </div>
 
-      {/* Informações do produto */}
-      <div className='p-4'>
-        <div className='flex justify-between items-start'>
-          <h3 className='text-lg font-semibold text-gray-800'>{product.name}</h3>
-          <span className='text-lg font-semibold text-gray-800 shrink-0'>R$ {product.price}</span>
-        </div>
-        <p className='text-sm text-gray-600 mt-2'>{product.description}</p>
-      </div>
-
-      {/* Camada de overlay com opacidade só no hover */}
-      <div className='absolute inset-0 flex items-center justify-center pointer-events-none'>
-        {/* Fundo escuro com transição e hover no card */}
-        <div className='absolute inset-0 bg-black opacity-0 group-hover:opacity-60 transition-opacity duration-300'></div>
-
-        {/* Botão visível e clicável */}
-        <button className='relative z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-600 pointer-events-auto hover:cursor-pointer'>
-          Comprar
+        {/* Favorite Button */}
+        <button
+          onClick={handleFavorite}
+          className='absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105'
+        >
+          {isFavorited ? (
+            <AiFillHeart className='w-5 h-5 text-red-500' />
+          ) : (
+            <AiOutlineHeart className='w-5 h-5 text-gray-400 hover:text-red-500 transition-colors duration-200' />
+          )}
         </button>
+      </div>
 
-        {/* Ícone de coração no canto superior direito */}
-        <div className='absolute top-2 right-2'>
-          <AiFillHeart className='w-6 h-6 text-gray-400 group-hover:text-red-500 transition-colors duration-300' />
+      {/* Content */}
+      <div className='p-4'>
+        {/* Title and Price */}
+        <div className='flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2'>
+          <h3 className='text-lg font-semibold text-gray-900 line-clamp-2 flex-1'>{product.title}</h3>
+          <div className='flex flex-col items-start sm:items-end'>
+            <span className='text-xl font-bold text-green-600'>R$ {product.price.toFixed(2)}</span>
+            {product.originalPrice && product.originalPrice > product.price && (
+              <span className='text-sm text-gray-500 line-through'>R$ {product.originalPrice.toFixed(2)}</span>
+            )}
+          </div>
         </div>
+
+        {/* Rating and Reviews */}
+        <div className='flex items-center gap-2 mb-3'>
+          <div className='flex items-center gap-1'>{renderStars(product.rating)}</div>
+          <span className='text-sm font-medium text-gray-700'>{product.rating.toFixed(1)}</span>
+          <span className='text-sm text-gray-500'>({product.reviewCount} avaliações)</span>
+        </div>
+
+        {/* Description */}
+        <p className='text-gray-600 text-sm mb-4 line-clamp-3'>{product.description}</p>
+
+        {/* Buy Button */}
+        <button
+          onClick={handleAddToCart}
+          className='w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2'
+        >
+          <BsCart3 className='w-5 h-5' />
+          Adicionar ao Carrinho
+        </button>
       </div>
     </div>
   );

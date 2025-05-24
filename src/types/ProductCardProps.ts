@@ -1,5 +1,5 @@
-import type { ProductInterface } from './Product';
+import type { Product } from './Product';
 
 export interface ProductCardProps {
-  product: ProductInterface;
+  product: Product;
 }
