@@ -10,6 +10,8 @@ export const Home = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryFromUrl = searchParams.get('category');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(categoryFromUrl);
+  const [favItems, setFavItems] = useState<number[]>([]); // Favorite Products IDs
+  const [cartItems, setCartItems] = useState<number[]>([]); // Favorite Products IDs
 
   const filteredProducts = selectedCategory
     ? products.filter(product => product.category === selectedCategory)
@@ -25,9 +27,17 @@ export const Home = () => {
     }
   }, [selectedCategory, setSearchParams]);
 
+  const toggleFavorite = (productId: number) => {
+    setFavItems(prev => (prev.includes(productId) ? prev.filter(id => id !== productId) : [...prev, productId]));
+  };
+
+  const addToCart = (productId: number) => {
+    setCartItems(prev => [...prev, productId]); // ou evite duplicatas com Set se preferir
+  };
+
   return (
     <div className='min-h-screen flex flex-col'>
-      <Navbar cartItems={[]} favItems={[]} />
+      <Navbar cartItems={cartItems} favItems={favItems} />
       <Main>
         <div className='flex flex-col items-center justify-center h-full'>
           {/* Seção de categorias */}
@@ -35,6 +45,9 @@ export const Home = () => {
 
           <div className='flex flex-wrap gap-8 justify-center mt-8'>
             {filteredProducts.map(product => {
+              product.onFavorite = () => toggleFavorite(product.id);
+              product.onAddToCart = () => addToCart(product.id);
+
               return <ProductCard key={product.id} product={product} />;
             })}
           </div>

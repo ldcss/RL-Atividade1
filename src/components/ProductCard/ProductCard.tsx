@@ -5,16 +5,7 @@ import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { useState } from 'react';
 
 const ProductCard = ({ product }: ProductCardProps) => {
-  const [isFavorited, setIsFavorited] = useState(false);
-
-  const handleFavorite = () => {
-    setIsFavorited(!isFavorited);
-    // onFavorite?.();
-  };
-
-  const handleAddToCart = () => {
-    // onAddToCart?.();
-  };
+  const [isFavorited, setIsFavorited] = useState(product.isFavorite);
 
   const renderStars = (rating: number) => {
     const stars = [];
@@ -62,7 +53,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
         {/* Favorite Button */}
         <button
-          onClick={handleFavorite}
+          onClick={() => {
+            product.onFavorite?.();
+            setIsFavorited(prev => !prev);
+          }}
           className='absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105 hover:cursor-pointer'
         >
           {isFavorited ? (
@@ -98,7 +92,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
         {/* Buy Button */}
         <button
-          onClick={handleAddToCart}
+          onClick={product.onAddToCart}
           className='w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 hover:cursor-pointer'
         >
           <BsCart3 className='w-5 h-5' />
