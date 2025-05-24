@@ -23,13 +23,13 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
     for (let i = 0; i < 5; i++) {
       if (i < fullStars) {
-        stars.push(<AiFillStar key={i} className='w-4 h-4 text-yellow-400' />);
+        stars.push(<AiFillStar key={i} className='w-4 h-4 text-yellow-500' />);
       } else if (i === fullStars && hasHalfStar) {
         stars.push(
           <div key={i} className='relative'>
             <AiOutlineStar className='w-4 h-4 text-gray-300' />
             <div className='absolute inset-0 overflow-hidden w-1/2'>
-              <AiFillStar className='w-4 h-4 text-yellow-400' />
+              <AiFillStar className='w-4 h-4 text-yellow-500' />
             </div>
           </div>,
         );
@@ -42,9 +42,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
   };
 
   return (
-    <div className='bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden max-w-sm mx-auto'>
+    <div className='bg-white rounded-lg shadow-md hover:shadow-lg overflow-hidden max-w-sm mx-auto hover:scale-105 transform transition-transform duration-300'>
       {/* Image Container */}
-      <div className='relative'>
+      <div className='relative group-hover:opacity-75'>
         <img
           src={product.image || '/placeholder.svg'}
           alt={product.title}
@@ -63,7 +63,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         {/* Favorite Button */}
         <button
           onClick={handleFavorite}
-          className='absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105'
+          className='absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105 hover:cursor-pointer'
         >
           {isFavorited ? (
             <AiFillHeart className='w-5 h-5 text-red-500' />
@@ -99,7 +99,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         {/* Buy Button */}
         <button
           onClick={handleAddToCart}
-          className='w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2'
+          className='w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 hover:cursor-pointer'
         >
           <BsCart3 className='w-5 h-5' />
           Adicionar ao Carrinho
