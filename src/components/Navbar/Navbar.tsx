@@ -8,7 +8,6 @@ const Navbar = ({ cartItems, favItems }: { cartItems: any[]; favItems: any[] }) 
   const [isFavOpen, setIsFavOpen] = useState(false);
 
   const handleSearch = () => {
-    console.log(`Buscando por: ${search} na categoria: ${category}`);
     // Aqui você pode implementar a lógica de filtragem
   };
 

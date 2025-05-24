@@ -4,17 +4,26 @@ import Main from '../../components/Main/Main';
 import Navbar from '../../components/Navbar/Navbar';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import { products } from '../../utils/productsData';
+import { useSearchParams } from 'react-router-dom';
 
 export const Home = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const categoryFromUrl = searchParams.get('category');
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(categoryFromUrl);
 
   const filteredProducts = selectedCategory
     ? products.filter(product => product.category === selectedCategory)
     : products;
 
   useEffect(() => {
-    console.log(selectedCategory);
-  }, [selectedCategory]);
+    // Quando a categoria mudar, atualize a URL
+    if (selectedCategory) {
+      setSearchParams({ category: selectedCategory });
+    } else {
+      searchParams.delete('category');
+      setSearchParams(searchParams);
+    }
+  }, [selectedCategory, setSearchParams]);
 
   return (
     <div className='min-h-screen flex flex-col'>
@@ -26,7 +35,6 @@ export const Home = () => {
 
           <div className='flex flex-wrap gap-8 justify-center mt-8'>
             {filteredProducts.map(product => {
-              console.log(product.title);
               return <ProductCard key={product.id} product={product} />;
             })}
           </div>
