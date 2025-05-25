@@ -2,6 +2,7 @@ import type { ProductCardProps } from '../../types/ProductCardProps';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { BsCart3 } from 'react-icons/bs';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
 
 const ProductCard = ({ product, isFavorited, onToggleFavorite }: ProductCardProps) => {
   const renderStars = (rating: number) => {
@@ -32,12 +33,14 @@ const ProductCard = ({ product, isFavorited, onToggleFavorite }: ProductCardProp
   return (
     <div className='bg-white rounded-lg shadow-md hover:shadow-lg overflow-hidden max-w-sm mx-auto hover:scale-105 transform transition-transform duration-300'>
       {/* Image Container */}
-      <div className='relative group-hover:opacity-75'>
-        <img
-          src={product.image || '/placeholder.svg'}
-          alt={product.title}
-          className='w-full h-48 sm:h-56 object-cover'
-        />
+      <div className='relative group-hover:opacity-75 hover:cursor-pointer'>
+        <Link to={`/produto/${product.id}`}>
+          <img
+            src={product.image || '/placeholder.svg'}
+            alt={product.title}
+            className='w-full h-48 sm:h-56 object-cover cursor-pointer'
+          />
+        </Link>
 
         {/* Badges */}
         <div className='absolute top-3 left-3 flex flex-col gap-1'>
