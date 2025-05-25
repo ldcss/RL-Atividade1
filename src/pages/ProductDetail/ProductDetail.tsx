@@ -5,78 +5,10 @@ import { AiOutlineHeart, AiFillHeart, AiFillStar, AiOutlineStar } from 'react-ic
 import { BsCart3, BsShare, BsChevronLeft, BsChevronRight, BsTruck, BsShield, BsArrowRepeat } from 'react-icons/bs';
 import { MdVerified } from 'react-icons/md';
 import { products } from '../../utils/productsData';
+import type { Product } from '../../types/Product';
+import type { ProductDetailProps } from '../../types/ProductDetailProps';
 
-interface Product {
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-  originalPrice?: number | null;
-  image: string;
-  badges: string[];
-  rating: number;
-  reviewCount: number;
-  category: string;
-  isFavorite: boolean;
-  isOnCart: boolean;
-  onFavorite?: () => void;
-  onAddToCart?: () => void;
-}
-
-interface Review {
-  id: number;
-  userName: string;
-  rating: number;
-  comment: string;
-  date: string;
-  verified: boolean;
-}
-
-interface ProductPageProps {
-  images?: string[];
-  specifications?: { [key: string]: string };
-  reviews?: Review[];
-  onAddReview?: (review: { rating: number; comment: string }) => void;
-}
-
-const StarRating = ({
-  rating,
-  onRatingChange,
-  readonly = false,
-}: {
-  rating: number;
-  onRatingChange?: (rating: number) => void;
-  readonly?: boolean;
-}) => {
-  const [hoverRating, setHoverRating] = useState(0);
-
-  return (
-    <div className='flex items-center gap-1'>
-      {[1, 2, 3, 4, 5].map(star => {
-        const filled = star <= (hoverRating || rating);
-        return (
-          <button
-            key={star}
-            type='button'
-            disabled={readonly}
-            onClick={() => !readonly && onRatingChange?.(star)}
-            onMouseEnter={() => !readonly && setHoverRating(star)}
-            onMouseLeave={() => !readonly && setHoverRating(0)}
-            className={`${readonly ? 'cursor-default' : 'cursor-pointer hover:scale-110'} transition-transform duration-200`}
-          >
-            {filled ? (
-              <AiFillStar className='w-5 h-5 text-yellow-400' />
-            ) : (
-              <AiOutlineStar className='w-5 h-5 text-gray-300' />
-            )}
-          </button>
-        );
-      })}
-    </div>
-  );
-};
-
-const ProductDetail = ({ images = [], specifications = {}, reviews = [], onAddReview }: ProductPageProps) => {
+const ProductDetail = ({ images = [], specifications = {}, reviews = [], onAddReview }: ProductDetailProps) => {
   const { produtoId } = useParams();
   const [productIndex, setProductIndex] = useState(-1);
   const [product, setProduct] = useState<Product | undefined>(undefined);

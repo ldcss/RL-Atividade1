@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { FaRocket, FaHeart, FaShoppingCart, FaUser, FaSearch } from 'react-icons/fa';
 import type { NavbarProps } from '../../types/NavbarProps';
+import { Link } from 'react-router-dom';
 
 const Navbar = ({ cartItems, favItems, onCartClick }: NavbarProps) => {
   const [search, setSearch] = useState('');
@@ -15,9 +16,11 @@ const Navbar = ({ cartItems, favItems, onCartClick }: NavbarProps) => {
     <nav className='bg-gray-800 text-white p-4 shadow-md'>
       <div className='container mx-auto flex justify-between items-center'>
         {/* Logo com ícone */}
-        <h1 className='text-lg font-bold flex items-center'>
-          <FaRocket className='mr-2 text-yellow-400' /> RocketShop
-        </h1>
+        <Link to='/' className='flex items-center'>
+          <h1 className='text-lg font-bold flex items-center'>
+            <FaRocket className='mr-2 text-yellow-400' /> RocketShop
+          </h1>
+        </Link>
 
         {/* Ícones com badges */}
         <div className='flex space-x-6 items-center pl-2'>
