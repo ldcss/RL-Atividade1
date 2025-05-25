@@ -6,6 +6,7 @@ import Navbar from './components/Navbar/Navbar';
 import CartPopup from './components/CartPopup/CartPopup';
 import { products } from './utils/productsData';
 import type { ProductInCart } from './types/ProductInCart';
+import Wishlist from './pages/Wishlist/Wishlist';
 
 function App() {
   const [favItems, setFavItems] = useState<number[]>([]); // Favorite Products IDs
@@ -40,6 +41,22 @@ function App() {
             }
           />
           <Route path='/produto/:produtoId' element={<ProductDetail />} />
+          <Route
+            path='/wishlist'
+            element={
+              <Wishlist
+                favoriteProductsIds={favItems}
+                onToggleFavorite={id =>
+                  setFavItems(prev => (prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]))
+                }
+                onAddToCart={id => setCartItems(prev => (prev.includes(id) ? prev : [...prev, id]))}
+                onAddAllToCart={() => {
+                  setCartItems(prev => [...new Set([...prev, ...favItems])]);
+                }}
+                cartItems={cartItems}
+              />
+            }
+          />
         </Routes>
         <CartPopup
           isOpen={isCartOpen}

@@ -40,24 +40,22 @@ const Navbar = ({ cartItems, favItems, onCartClick }: NavbarProps) => {
 
           {/* Wishlist */}
           <div className='relative flex items-center'>
-            <button
-              onClick={() => setIsFavOpen(!isFavOpen)}
-              className='text-gray-400 hover:text-white hover:cursor-pointer relative'
-            >
+            <Link to={'/wishlist'} className='text-gray-400 hover:text-white hover:cursor-pointer relative'>
               <FaHeart className='text-xl' />
-              {favItems.length >= 0 && (
+              {favItems.length > 0 && (
                 <span className='absolute -top-2 -right-2 bg-red-700 text-white text-xs font-bold rounded-full px-1'>
                   {favItems.length}
                 </span>
               )}
-            </button>
+            </Link>
+            {/* <button className='text-gray-400 hover:text-white hover:cursor-pointer relative'></button> */}
           </div>
 
           {/* Carrinho */}
           <div className='relative flex items-center'>
             <button onClick={onCartClick} className='text-gray-400 hover:text-white hover:cursor-pointer relative'>
               <FaShoppingCart className='text-xl' />
-              {cartItems.length >= 0 && (
+              {cartItems.length > 0 && (
                 <span className='absolute -top-2 -right-2 bg-red-700 text-white text-xs font-bold rounded-full px-1'>
                   {cartItems.length}
                 </span>
