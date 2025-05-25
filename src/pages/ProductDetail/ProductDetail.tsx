@@ -7,6 +7,7 @@ import { MdVerified } from 'react-icons/md';
 import { products } from '../../utils/productsData';
 import type { Product } from '../../types/Product';
 import type { ProductDetailProps } from '../../types/ProductDetailProps';
+import StarRating from '../../components/StarRating/StarRating';
 
 const ProductDetail = ({ images = [], specifications = {}, reviews = [], onAddReview }: ProductDetailProps) => {
   const { produtoId } = useParams();
