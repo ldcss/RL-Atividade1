@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { FaRocket, FaHeart, FaShoppingCart, FaUser, FaSearch } from 'react-icons/fa';
 import type { NavbarProps } from '../../types/NavbarProps';
 import { Link } from 'react-router-dom';
+import { useShop } from '../ShopContext/ShopContext';
 
-const Navbar = ({ cartItems, favItems, onCartClick }: NavbarProps) => {
+const Navbar = ({ onCartClick }: NavbarProps) => {
   const [search, setSearch] = useState('');
-  const [category, setCategory] = useState('Todas');
-  const [isFavOpen, setIsFavOpen] = useState(false);
+  const { cartItems, favItems } = useShop();
 
   const handleSearch = () => {
     // Aqui você pode implementar a lógica de filtragem

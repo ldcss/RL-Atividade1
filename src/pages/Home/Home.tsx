@@ -4,18 +4,13 @@ import Main from '../../components/Main/Main';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import { products } from '../../utils/productsData';
 import { useSearchParams } from 'react-router-dom';
+import { useShop } from '../../components/ShopContext/ShopContext';
 
-interface HomeProps {
-  favItems: number[];
-  cartItems: number[];
-  setFavItems: React.Dispatch<React.SetStateAction<number[]>>;
-  setCartItems: React.Dispatch<React.SetStateAction<number[]>>;
-}
-
-export const Home = ({ favItems, cartItems, setFavItems, setCartItems }: HomeProps) => {
+export const Home = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryFromUrl = searchParams.get('category');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(categoryFromUrl);
+  const { favItems, toggleFavorite, addToCart } = useShop();
 
   const filteredProducts = selectedCategory
     ? products.filter(product => product.category === selectedCategory)
@@ -30,16 +25,6 @@ export const Home = ({ favItems, cartItems, setFavItems, setCartItems }: HomePro
       setSearchParams(searchParams);
     }
   }, [selectedCategory, setSearchParams]);
-
-  const toggleFavorite = (productId: number) => {
-    setFavItems((prev: number[]) =>
-      prev.includes(productId) ? prev.filter((id: number) => id !== productId) : [...prev, productId],
-    );
-  };
-
-  const addToCart = (productId: number) => {
-    setCartItems((prev: any) => [...prev, productId]);
-  };
 
   return (
     <div className='min-h-screen flex flex-col'>

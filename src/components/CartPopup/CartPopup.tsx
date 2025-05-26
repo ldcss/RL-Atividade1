@@ -2,32 +2,25 @@ import { BsCart3, BsPlus, BsDash, BsTrash } from 'react-icons/bs';
 import { AiOutlineClose } from 'react-icons/ai';
 import type { ProductInCart } from '../../types/ProductInCart';
 import { useNavigate } from 'react-router-dom';
+import { useShop } from '../ShopContext/ShopContext';
+import { getGroupedCartItems } from '../../utils/getGroupedCartItems';
 
 interface CartPopupProps {
   isOpen: boolean;
   onClose: () => void;
-  items: ProductInCart[];
-  onUpdateQuantity: (id: number, quantity: number) => void;
-  onRemoveItem: (id: number) => void;
   onItemClick: (item: ProductInCart) => void;
   onContinueShopping: () => void;
 }
 
-const CartPopup = ({
-  isOpen,
-  onClose,
-  items,
-  onUpdateQuantity,
-  onRemoveItem,
-  onItemClick,
-  onContinueShopping,
-}: CartPopupProps) => {
+const CartPopup = ({ isOpen, onClose, onItemClick, onContinueShopping }: CartPopupProps) => {
   if (!isOpen) return null;
+  let navigate = useNavigate();
+  const { cartItems, updateQuantity, removeItem } = useShop();
+  const groupedCartItems: ProductInCart[] = getGroupedCartItems(cartItems);
 
-  const subtotal = items.reduce((total, item) => total + item.price * item.quantity, 0);
+  const subtotal = groupedCartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   const shipping = subtotal > 100 ? 0 : 15;
   const total = subtotal + shipping;
-  let navigate = useNavigate();
 
   return (
     <>
@@ -49,7 +42,7 @@ const CartPopup = ({
         <div className='flex items-center justify-between p-4 border-b'>
           <h2 className='text-lg font-semibold text-gray-900 flex items-center gap-2'>
             <BsCart3 className='w-5 h-5' />
-            Carrinho ({items.length})
+            Carrinho ({groupedCartItems.length})
           </h2>
           <button
             onClick={onClose}
@@ -61,7 +54,7 @@ const CartPopup = ({
 
         {/* Content */}
         <div className='flex flex-col h-full'>
-          {items.length === 0 ? (
+          {groupedCartItems.length === 0 ? (
             /* Empty Cart */
             <div className='flex-1 flex flex-col items-center justify-center p-8 text-center'>
               <BsCart3 className='w-16 h-16 text-gray-300 mb-4' />
@@ -78,7 +71,7 @@ const CartPopup = ({
             <>
               {/* Items List */}
               <div className='flex-[0.85] overflow-y-auto p-4 space-y-4'>
-                {items.map(item => (
+                {groupedCartItems.map(item => (
                   <div
                     key={item.id}
                     className='flex gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200'
@@ -130,7 +123,7 @@ const CartPopup = ({
                         {/* Quantity Controls */}
                         <div className='flex items-center gap-2'>
                           <button
-                            onClick={() => onUpdateQuantity(item.id, Math.max(1, item.quantity - 1))}
+                            onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
                             className='p-1 hover:bg-white rounded transition-colors duration-200 hover:cursor-pointer'
                             disabled={item.quantity <= 1}
                           >
@@ -138,7 +131,7 @@ const CartPopup = ({
                           </button>
                           <span className='text-sm font-medium min-w-[20px] text-center'>{item.quantity}</span>
                           <button
-                            onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
+                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
                             className='p-1 hover:bg-white rounded transition-colors duration-200 hover:cursor-pointer'
                           >
                             <BsPlus className='w-3 h-3 text-gray-600' />
@@ -149,7 +142,7 @@ const CartPopup = ({
 
                     {/* Remove Button */}
                     <button
-                      onClick={() => onRemoveItem(item.id)}
+                      onClick={() => removeItem(item.id)}
                       className='flex-shrink-0 p-2 hover:bg-red-100 rounded-lg transition-colors duration-200 group hover:cursor-pointer'
                     >
                       <BsTrash className='w-4 h-4 text-gray-400 group-hover:text-red-500' />

@@ -9,17 +9,9 @@ import type { Product } from '../../types/Product';
 import type { ProductDetailProps } from '../../types/ProductDetailProps';
 import StarRating from '../../components/StarRating/StarRating';
 import ImageGallery from '../../components/ImageGallery/ImageGallery';
+import { useShop } from '../../components/ShopContext/ShopContext';
 
-const ProductDetail = ({
-  images = [],
-  specifications = {},
-  reviews = [],
-  onAddReview,
-  onToggleFavorite,
-  cartItems,
-  favItems,
-  onUpdateCartQuantity,
-}: ProductDetailProps) => {
+const ProductDetail = ({ images = [], specifications = {}, reviews = [], onAddReview }: ProductDetailProps) => {
   const { produtoId } = useParams();
   const [productIndex, setProductIndex] = useState(-1);
   const [product, setProduct] = useState<Product | undefined>(undefined);
@@ -28,6 +20,8 @@ const ProductDetail = ({
   const [activeTab, setActiveTab] = useState<'description' | 'specifications' | 'reviews'>('description');
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [newReview, setNewReview] = useState({ rating: 5, comment: '' });
+
+  const { cartItems, favItems, handleUpdateCartQuantity, toggleFavorite } = useShop();
 
   // Combine main image with additional images
   const allImages = [product?.image, ...images].filter(Boolean);
@@ -186,7 +180,7 @@ const ProductDetail = ({
 
               <div className='flex gap-3'>
                 <button
-                  onClick={() => product && onUpdateCartQuantity(product.id, quantity)}
+                  onClick={() => product && handleUpdateCartQuantity(product.id, quantity)}
                   className='flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed'
                   disabled={cartItems.includes(product?.id || 0) && quantity > 0}
                 >
@@ -197,7 +191,7 @@ const ProductDetail = ({
                 </button>
 
                 <button
-                  onClick={() => product && onToggleFavorite(product.id)}
+                  onClick={() => product && toggleFavorite(product.id)}
                   className='p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200 hover:cursor-pointer'
                 >
                   {product && favItems.includes(product.id) ? (

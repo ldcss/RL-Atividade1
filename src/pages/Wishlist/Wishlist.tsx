@@ -4,17 +4,18 @@ import { BsCart3, BsGrid3X3Gap, BsList, BsFilter, BsShare } from 'react-icons/bs
 import { MdSort } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { products } from '../../utils/productsData';
-import type { WishlistProps } from '../../types/WishlistProps';
 import WishlistProductCard from '../../components/WishlistProductCard/WishlistProductCard';
 import EmptyWishlist from '../../components/EmptyWishlist/EmptyWishlist';
+import { useShop } from '../../components/ShopContext/ShopContext';
 
-const Wishlist = ({ favoriteProductsIds, onToggleFavorite, onAddToCart, onAddAllToCart, cartItems }: WishlistProps) => {
+const Wishlist = () => {
+  const { cartItems, favItems, toggleFavorite, addToCart, addAllToCart } = useShop();
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [sortBy, setSortBy] = useState<'recent' | 'price-low' | 'price-high' | 'rating'>('recent');
   const [filterCategory, setFilterCategory] = useState<string>('all');
   const favoriteProducts = useMemo(() => {
-    return products.filter(product => favoriteProductsIds.includes(product.id));
-  }, [favoriteProductsIds]);
+    return products.filter(product => favItems.includes(product.id));
+  }, [favItems]);
 
   // Obtém categorias únicas
   const categories = useMemo(() => {
@@ -97,7 +98,7 @@ const Wishlist = ({ favoriteProductsIds, onToggleFavorite, onAddToCart, onAddAll
               {/* Add All to Cart */}
               {favoriteProducts.length > 0 && (
                 <button
-                  onClick={onAddAllToCart}
+                  onClick={addAllToCart}
                   className='bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200 flex items-center gap-2'
                 >
                   <BsCart3 className='w-4 h-4' />
@@ -197,8 +198,8 @@ const Wishlist = ({ favoriteProductsIds, onToggleFavorite, onAddToCart, onAddAll
               <WishlistProductCard
                 key={product.id}
                 product={product}
-                onToggleFavorite={onToggleFavorite}
-                onAddToCart={onAddToCart}
+                onToggleFavorite={toggleFavorite}
+                onAddToCart={addToCart}
                 isOnCart={cartItems.includes(product.id)}
               />
             ))}

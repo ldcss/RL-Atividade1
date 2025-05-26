@@ -1,23 +1,29 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { type FormData } from '../../types/FormData';
-import type { CheckoutFormProps } from '../../types/CheckoutFormProps';
 import PaymentStep from '../../components/PaymentStep/PaymentStep';
 import PersonalDataStep from '../../components/PersonalDataStep/PersonalDataStep';
 import CheckoutHeader from '../../components/CheckoutHeader/CheckoutHeader';
 import ConfirmationStep from '../../components/ConfirmationStep/ConfirmationStep';
 import OrderSummary from '../../components/OrderSummary/OrderSummary';
+import { useShop } from '../../components/ShopContext/ShopContext';
+import { parseCartItems } from '../../utils/parsedCartItems';
+import { useNavigate } from 'react-router-dom';
+import SuccessPopup from '../../components/SuccessPopup/SuccessPopup';
 
-const CheckoutForm = ({ cartItems = [], onOrderComplete }: CheckoutFormProps) => {
+const CheckoutForm = () => {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
+  const [showPopup, setShowPopup] = useState(false); // novo estado
+  const { cartItems, clearCart } = useShop();
+  const parsedCartItems = useMemo(() => parseCartItems(cartItems), [cartItems]);
 
   const {
     control,
     handleSubmit,
     watch,
     trigger,
-    formState: { errors, isValid },
-    setValue,
+    formState: { errors },
     getValues,
   } = useForm<FormData>({
     mode: 'onChange',
@@ -42,11 +48,12 @@ const CheckoutForm = ({ cartItems = [], onOrderComplete }: CheckoutFormProps) =>
   });
 
   const paymentMethod = watch('paymentMethod');
-  const subtotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  const subtotal = parsedCartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   const shipping = subtotal > 100 ? 0 : 15;
   const total = subtotal + shipping;
 
-  const handleNextStep = async () => {
+  const handleNextStep = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     let fieldsToValidate: (keyof FormData)[] = [];
 
     if (currentStep === 1) {
@@ -71,12 +78,21 @@ const CheckoutForm = ({ cartItems = [], onOrderComplete }: CheckoutFormProps) =>
   };
 
   const onSubmit = (data: FormData) => {
-    onOrderComplete?.(data);
+    setShowPopup(true); // mostrar popup
+    clearCart();
+
+    setTimeout(() => {
+      navigate('/');
+    }, 2000); // redirecionar após 2 segundos
+
     console.log('Pedido finalizado:', data);
   };
 
+  console.log('cartItems no CheckoutForm:', cartItems);
+  console.log('parsedCartItems:', parsedCartItems);
   return (
     <div className='min-h-screen bg-gray-50'>
+      <SuccessPopup visible={showPopup} /> {/* renderize o popup */}
       <div className='max-w-4xl mx-auto px-4 py-8'>
         <CheckoutHeader currentStep={currentStep} />
 
@@ -121,7 +137,7 @@ const CheckoutForm = ({ cartItems = [], onOrderComplete }: CheckoutFormProps) =>
               </div>
             </div>
 
-            <OrderSummary cartItems={cartItems} subtotal={subtotal} shipping={shipping} total={total} />
+            <OrderSummary cartItems={parsedCartItems} subtotal={subtotal} shipping={shipping} total={total} />
           </div>
         </form>
       </div>
