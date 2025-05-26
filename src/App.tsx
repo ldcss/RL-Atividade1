@@ -1,15 +1,11 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import ProductDetail from './pages/ProductDetail/ProductDetail';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Navbar from './components/Navbar/Navbar';
 import CartPopup from './components/CartPopup/CartPopup';
-import { products } from './utils/productsData';
-import type { ProductInCart } from './types/ProductInCart';
 import Wishlist from './pages/Wishlist/Wishlist';
-import { parseArrayOfNumbers } from './utils/parseArrayOfNumbers';
 import CheckoutForm from './pages/CheckoutForm/CheckoutForm';
-import { parseCartItems } from './utils/parsedCartItems';
 import { ShopProvider } from './components/ShopContext/ShopContext';
 
 function App() {
@@ -26,9 +22,6 @@ function App() {
               path='/produto/:produtoId'
               element={
                 <ProductDetail
-                  images={[]} // ou passe imagens relevantes
-                  specifications={{}}
-                  reviews={[]} // ou passe reviews relevantes
                   onAddReview={review => {
                     console.log('review:', review);
                   }}
