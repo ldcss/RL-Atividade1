@@ -15,7 +15,6 @@ const ProductDetail = ({
   specifications = {},
   reviews = [],
   onAddReview,
-  onToggleCart,
   onToggleFavorite,
   cartItems,
   favItems,
