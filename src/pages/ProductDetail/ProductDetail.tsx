@@ -187,7 +187,7 @@ const ProductDetail = ({
               <div className='flex gap-3'>
                 <button
                   onClick={() => product && onUpdateCartQuantity(product.id, quantity)}
-                  className='flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 hover:cursor-pointer  text-gray-600 hover:text-gray-900 disabled:opacity-50 disabled:cursor-not-allowed'
+                  className='flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed'
                   disabled={cartItems.includes(product?.id || 0) && quantity > 0}
                 >
                   <BsCart3 className='w-5 h-5' />

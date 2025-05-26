@@ -30,7 +30,7 @@ export const categories: Category[] = [
     bgGradient: 'from-orange-500 to-orange-600',
   },
   {
-    id: 'peripherics',
+    id: 'peripherals',
     name: 'Periféricos',
     image: '/images/categories/periferico.jpg',
     color: 'text-purple-600',
