@@ -1,6 +1,7 @@
 import { BsCart3, BsPlus, BsDash, BsTrash } from 'react-icons/bs';
 import { AiOutlineClose } from 'react-icons/ai';
 import type { ProductInCart } from '../../types/ProductInCart';
+import { useNavigate } from 'react-router-dom';
 
 interface CartPopupProps {
   isOpen: boolean;
@@ -9,25 +10,24 @@ interface CartPopupProps {
   onUpdateQuantity: (id: number, quantity: number) => void;
   onRemoveItem: (id: number) => void;
   onItemClick: (item: ProductInCart) => void;
-  onCheckout: () => void;
   onContinueShopping: () => void;
 }
 
-export default function CartPopup({
+const CartPopup = ({
   isOpen,
   onClose,
   items,
   onUpdateQuantity,
   onRemoveItem,
   onItemClick,
-  onCheckout,
   onContinueShopping,
-}: CartPopupProps) {
+}: CartPopupProps) => {
   if (!isOpen) return null;
 
   const subtotal = items.reduce((total, item) => total + item.price * item.quantity, 0);
   const shipping = subtotal > 100 ? 0 : 15;
   const total = subtotal + shipping;
+  let navigate = useNavigate();
 
   return (
     <>
@@ -183,7 +183,10 @@ export default function CartPopup({
                 {/* Action Buttons */}
                 <div className='space-y-2'>
                   <button
-                    onClick={onCheckout}
+                    onClick={() => {
+                      navigate('/checkout');
+                      onClose();
+                    }}
                     className='w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 hover:cursor-pointer'
                   >
                     Finalizar Compra
@@ -202,4 +205,6 @@ export default function CartPopup({
       </div>
     </>
   );
-}
+};
+
+export default CartPopup;

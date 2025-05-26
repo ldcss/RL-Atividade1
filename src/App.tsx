@@ -8,6 +8,8 @@ import { products } from './utils/productsData';
 import type { ProductInCart } from './types/ProductInCart';
 import Wishlist from './pages/Wishlist/Wishlist';
 import { parseArrayOfNumbers } from './utils/parseArrayOfNumbers';
+import CheckoutForm from './pages/CheckoutForm/CheckoutForm';
+import { parseCartItems } from './utils/parsedCartItems';
 
 function App() {
   const [favItems, setFavItems] = useState<number[]>([]); // Favorite Products IDs
@@ -108,6 +110,18 @@ function App() {
               />
             }
           />
+          <Route
+            path='/checkout'
+            element={
+              <CheckoutForm
+                cartItems={parseCartItems(cartItems)}
+                onOrderComplete={data => {
+                  console.log('Pedido finalizado com sucesso:', data);
+                  setCartItems([]); // Limpa o carrinho após o pedido
+                }}
+              />
+            }
+          />
         </Routes>
         <CartPopup
           isOpen={isCartOpen}
@@ -130,7 +144,6 @@ function App() {
           onUpdateQuantity={handleUpdateQuantity}
           onRemoveItem={handleRemoveItem}
           onItemClick={item => console.log('Item clicado:', item)}
-          onCheckout={() => console.log('Finalizar compra')}
           onContinueShopping={() => setIsCartOpen(false)}
         />
       </div>
