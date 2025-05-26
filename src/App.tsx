@@ -14,7 +14,6 @@ function App() {
   return (
     <ShopProvider>
       <BrowserRouter>
-        {/* Usando bg-gray-50 ou bg-white para um fundo limpo */}
         <div className='min-h-screen flex flex-col bg-gray-50 font-sans antialiased'>
           <Navbar onCartClick={() => setIsCartOpen(true)} />
           <Routes>
