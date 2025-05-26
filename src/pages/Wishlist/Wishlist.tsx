@@ -1,10 +1,9 @@
 import { useState, useMemo } from 'react';
-import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import { AiFillHeart } from 'react-icons/ai';
 import { BsCart3, BsGrid3X3Gap, BsList, BsFilter, BsShare } from 'react-icons/bs';
 import { MdSort } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { products } from '../../utils/productsData';
-import type { Product } from '../../types/Product';
 import type { WishlistProps } from '../../types/WishlistProps';
 import WishlistProductCard from '../../components/WishlistProductCard/WishlistProductCard';
 import EmptyWishlist from '../../components/EmptyWishlist/EmptyWishlist';

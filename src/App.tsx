@@ -94,7 +94,9 @@ function App() {
                 images={[]} // ou passe imagens relevantes
                 specifications={{}}
                 reviews={[]} // ou passe reviews relevantes
-                onAddReview={review => {}}
+                onAddReview={review => {
+                  console.log('review:', review);
+                }}
                 onToggleCart={handleToggleCart}
                 onToggleFavorite={handleToggleFavorite}
                 favItems={favItems}
