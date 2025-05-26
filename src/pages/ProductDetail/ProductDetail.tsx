@@ -152,14 +152,14 @@ const ProductDetail = ({
                 <div className='flex items-center border border-gray-300 rounded-lg'>
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className='p-2 hover:bg-gray-100 transition-colors duration-200'
+                    className='p-2 hover:bg-gray-100 transition-colors duration-200 hover:cursor-pointer'
                   >
                     -
                   </button>
                   <span className='px-4 py-2 min-w-[60px] text-center'>{quantity}</span>
                   <button
                     onClick={() => setQuantity(quantity + 1)}
-                    className='p-2 hover:bg-gray-100 transition-colors duration-200'
+                    className='p-2 hover:bg-gray-100 transition-colors duration-200 hover:cursor-pointer'
                   >
                     +
                   </button>
@@ -169,7 +169,7 @@ const ProductDetail = ({
               <div className='flex gap-3'>
                 <button
                   onClick={() => product && onToggleCart(product.id)}
-                  className='flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2'
+                  className='flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 hover:cursor-pointer'
                 >
                   <BsCart3 className='w-5 h-5' />
                   {product && cartItems.includes(product.id) ? 'No Carrinho' : 'Adicionar ao Carrinho'}
@@ -177,7 +177,7 @@ const ProductDetail = ({
 
                 <button
                   onClick={() => product && onToggleFavorite(product.id)}
-                  className='p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200'
+                  className='p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200 hover:cursor-pointer'
                 >
                   {product && favItems.includes(product.id) ? (
                     <AiFillHeart className='w-6 h-6 text-red-500' />
@@ -188,7 +188,7 @@ const ProductDetail = ({
 
                 <button
                   onClick={handleShare}
-                  className='p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200'
+                  className='p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200 hover:cursor-pointer'
                 >
                   <BsShare className='w-6 h-6 text-gray-600' />
                 </button>
@@ -226,7 +226,7 @@ const ProductDetail = ({
                 <button
                   key={tab.key}
                   onClick={() => setActiveTab(tab.key as any)}
-                  className={`px-6 py-4 font-medium transition-colors duration-200 ${
+                  className={`hover:cursor-pointer px-6 py-4 font-medium transition-colors duration-200 ${
                     activeTab === tab.key
                       ? 'text-blue-600 border-b-2 border-blue-600 bg-blue-50'
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
@@ -292,7 +292,7 @@ const ProductDetail = ({
                   <h3 className='text-lg font-semibold text-gray-900'>Avaliações dos Clientes</h3>
                   <button
                     onClick={() => setShowReviewForm(!showReviewForm)}
-                    className='bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200'
+                    className='bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 hover:cursor-pointer'
                   >
                     {showReviewForm ? 'Cancelar' : 'Escrever Avaliação'}
                   </button>
@@ -321,7 +321,7 @@ const ProductDetail = ({
                     </div>
                     <button
                       type='submit'
-                      className='bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-6 rounded-lg transition-colors duration-200'
+                      className='bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-6 rounded-lg transition-colors duration-200 hover:cursor-pointer'
                     >
                       Enviar Avaliação
                     </button>
