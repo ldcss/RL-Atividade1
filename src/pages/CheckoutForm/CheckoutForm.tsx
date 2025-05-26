@@ -14,7 +14,7 @@ import SuccessPopup from '../../components/SuccessPopup/SuccessPopup';
 const CheckoutForm = () => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
-  const [showPopup, setShowPopup] = useState(false); // novo estado
+  const [showPopup, setShowPopup] = useState(false);
   const { cartItems, clearCart } = useShop();
   const parsedCartItems = useMemo(() => parseCartItems(cartItems), [cartItems]);
 
@@ -78,19 +78,19 @@ const CheckoutForm = () => {
   };
 
   const onSubmit = (data: FormData) => {
-    setShowPopup(true); // mostrar popup
+    setShowPopup(true); // Mostrar popup
     clearCart();
 
     setTimeout(() => {
       navigate('/');
-    }, 2000); // redirecionar após 2 segundos
+    }, 2000); // Redirecionar após 2 segundos
 
     console.log('Pedido finalizado:', data);
   };
 
   return (
     <div className='min-h-screen bg-gray-50'>
-      <SuccessPopup visible={showPopup} /> {/* renderize o popup */}
+      <SuccessPopup visible={showPopup} />
       <div className='max-w-4xl mx-auto px-4 py-8'>
         <CheckoutHeader currentStep={currentStep} />
 

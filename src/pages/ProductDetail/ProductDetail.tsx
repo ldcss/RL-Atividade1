@@ -8,7 +8,6 @@ import { products } from '../../utils/productsData';
 import type { Product } from '../../types/Product';
 import type { ProductDetailProps } from '../../types/ProductDetailProps';
 import StarRating from '../../components/StarRating/StarRating';
-import ImageGallery from '../../components/ImageGallery/ImageGallery';
 import { useShop } from '../../hooks/ShopContext/ShopContext';
 import { categories } from '../../utils/categoriesData';
 

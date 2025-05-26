@@ -11,9 +11,9 @@ const Navbar = ({ onCartClick }: NavbarProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState<Product[]>([]);
   const [showSearchResults, setShowSearchResults] = useState(false);
-  const debouncedSearchTerm = useDebounce(searchTerm, 300); // Debounce de 300ms
+  const debouncedSearchTerm = useDebounce(searchTerm, 300);
   const { cartItems, favItems } = useShop();
-  const navigate = useNavigate(); // Hook para navegação
+  const navigate = useNavigate();
   const searchContainerRef = useRef<HTMLDivElement>(null); // Ref para o container da busca
 
   // Efeito para buscar produtos quando o termo debounced mudar
@@ -36,7 +36,7 @@ const Navbar = ({ onCartClick }: NavbarProps) => {
 
   const handleProductClick = (productId: number) => {
     navigate(`/product/${productId}`); // Navega para a página do produto
-    setSearchTerm(''); // Limpa a busca
+    setSearchTerm('');
     setSearchResults([]);
     setShowSearchResults(false);
   };
@@ -80,8 +80,6 @@ const Navbar = ({ onCartClick }: NavbarProps) => {
         <div className='flex space-x-6 items-center'>
           {/* Search bar e resultados */}
           <div ref={searchContainerRef} className='relative'>
-            {' '}
-            {/* Adiciona a ref aqui */}
             <div className='flex items-center border border-gray-200 rounded-full px-4 py-2 w-full sm:w-64 focus-within:border-blue-400 transition-all duration-300'>
               <input
                 type='text'

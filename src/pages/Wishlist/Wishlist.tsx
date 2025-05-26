@@ -1,8 +1,5 @@
 import { useState, useMemo } from 'react';
-import { AiFillHeart } from 'react-icons/ai'; // Mantido para o ícone no header
 import { BsCart3, BsFilter, BsShare } from 'react-icons/bs'; // Removido BsGrid3X3Gap, BsList
-import { MdSort } from 'react-icons/md'; // Mantido para o ícone de ordenação
-import { FaRocket } from 'react-icons/fa'; // Importado para o logo (conceitual)
 import { Link } from 'react-router-dom';
 import { products } from '../../utils/productsData';
 import ProductCard from '../../components/ProductCard/ProductCard';
@@ -12,7 +9,6 @@ import { categories as allCategories } from '../../utils/categoriesData';
 
 const Wishlist = () => {
   const { favItems, toggleFavorite, addAllToCart } = useShop();
-  // Removido o estado de viewMode
   const [sortBy, setSortBy] = useState<'recent' | 'price-low' | 'price-high' | 'rating'>('recent');
   const [filterCategory, setFilterCategory] = useState<string>('all');
 
@@ -75,9 +71,7 @@ const Wishlist = () => {
 
   return (
     <div className='min-h-screen bg-gray-50 font-sans antialiased'>
-      {/* Container principal para o fundo branco */}
       <div className='bg-white shadow-sm border-b border-gray-100 pb-8'>
-        {/* Adicionado padding inferior */}
         {/* Breadcrumb */}
         <div className='max-w-6xl mx-auto px-4 py-4'>
           <nav className='text-sm text-gray-500'>
@@ -88,9 +82,7 @@ const Wishlist = () => {
             <span className='text-gray-800 font-medium'>Meus Favoritos</span>
           </nav>
         </div>
-        {/* Header da Wishlist (agora dentro do fundo branco) */}
         <div className='max-w-6xl mx-auto px-4 pt-8'>
-          {/* pt-8 para espaçamento do breadcrumb */}
           <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6'>
             <div className='flex items-center gap-3'>
               <h1 className='text-3xl font-extrabold text-gray-900'>Minha Lista de Desejos</h1>
@@ -115,20 +107,13 @@ const Wishlist = () => {
               </button>
             </div>
           </div>
-          {/* Contador de produtos abaixo do título, dentro do contêiner principal */}
-          <p className='text-gray-600 mt-2 text-lg px-4 sm:px-0'>
-            {/* Adicionado px-4 para alinhamento em mobile */}
-            {favoriteProducts.length} produtos salvos
-          </p>
+          <p className='text-gray-600 mt-2 text-lg px-4 sm:px-0'>{favoriteProducts.length} produtos salvos</p>
         </div>
       </div>
-      {/* Fim do contêiner principal com fundo branco */}
       {/* Filtros e Controles */}
       <div className='py-6 border-b border-gray-100'>
-        {/* Removido bg-gray-50 pois o fundo será do body */}
         <div className='max-w-6xl mx-auto px-4'>
           <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6'>
-            {/* Left Controls (Category Filter) */}
             <div className='flex items-center gap-4'>
               <label htmlFor='category-filter' className='sr-only'>
                 Filtrar por Categoria
@@ -149,10 +134,7 @@ const Wishlist = () => {
                 ))}
               </select>
             </div>
-            {/* Right Controls (Sort) - Removido View Mode Buttons */}
             <div className='flex items-center gap-4'>
-              {/* Removido o gap-4 para o icon de ordenar */}
-              {/* Sort */}
               <label htmlFor='sort-by' className='sr-only'>
                 Ordenar por
               </label>
@@ -184,7 +166,6 @@ const Wishlist = () => {
           </div>
         ) : (
           <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
-            {/* Apenas Grid */}
             {filteredAndSortedProducts.map(product => (
               <ProductCard
                 key={product.id}

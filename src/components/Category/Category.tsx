@@ -39,8 +39,6 @@ const CategoryFilter = ({ onCategorySelect, selectedCategory }: CategoryFilterPr
     const handleResize = () => {
       if (activeCategory && activeCategoryRef.current && containerRef.current) {
         // Força o re-cálculo da posição da barra
-        // Poderíamos chamar a mesma lógica do useEffect acima, ou apenas
-        // redefinir o estado para acionar o useEffect que calcula o estilo.
         setUnderlineStyle({ opacity: 0 }); // Esconde brevemente para forçar recalculo
         const timeoutId = setTimeout(() => {
           const activeElement = activeCategoryRef.current;
@@ -54,7 +52,7 @@ const CategoryFilter = ({ onCategorySelect, selectedCategory }: CategoryFilterPr
               opacity: 1,
             });
           }
-        }, 50); // Pequeno atraso para garantir que os elementos já se ajustaram
+        }, 50);
         return () => clearTimeout(timeoutId);
       }
     };
@@ -65,13 +63,10 @@ const CategoryFilter = ({ onCategorySelect, selectedCategory }: CategoryFilterPr
 
   return (
     <div className='w-full max-w-6xl mx-auto py-8 px-4'>
-      {/* Seção de Título e Descrição Centralizada e Suave */}
       <div className='text-center mb-12'>
         <h2 className='text-3xl font-bold text-gray-800 mb-2'>Navegue por Categorias</h2>
         <p className='text-gray-500 text-lg'>Descubra produtos incríveis em cada uma delas.</p>
       </div>
-
-      {/* Botão "Limpar filtro" - Centralizado */}
       {activeCategory && (
         <div className='flex justify-center mb-8'>
           <button
@@ -84,10 +79,7 @@ const CategoryFilter = ({ onCategorySelect, selectedCategory }: CategoryFilterPr
         </div>
       )}
 
-      {/* Contêiner do Grid de Categorias Circulares - Responsivo */}
       <div className='relative'>
-        {' '}
-        {/* Adicionado relative para o posicionamento da underline */}
         <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 sm:gap-8' ref={containerRef}>
           {categories.map(category => {
             const isActive = activeCategory === category.id;
@@ -102,7 +94,6 @@ const CategoryFilter = ({ onCategorySelect, selectedCategory }: CategoryFilterPr
                   hover:cursor-pointer
                 `}
               >
-                {/* Círculo da Imagem */}
                 <div
                   className={`
                     w-28 h-28 sm:w-32 sm:h-32 lg:w-36 lg:h-36 rounded-full overflow-hidden shadow-md flex items-center justify-center relative
@@ -115,11 +106,8 @@ const CategoryFilter = ({ onCategorySelect, selectedCategory }: CategoryFilterPr
                     alt={category.name}
                     className='w-full h-full object-cover transition-transform duration-300 group-hover:scale-110'
                   />
-                  {/* Overlay para categoria ativa */}
                   {isActive && <div className='absolute inset-0 rounded-full bg-gray-600/10' />}
                 </div>
-
-                {/* Nome da Categoria com barra animada */}
                 <span
                   className={`
                     mt-4 text-base font-semibold text-gray-900 transition-colors duration-200
@@ -127,12 +115,10 @@ const CategoryFilter = ({ onCategorySelect, selectedCategory }: CategoryFilterPr
                 >
                   {category.name}
                 </span>
-                {/* A barra animada não está mais aqui, mas sim abaixo do grid */}
               </button>
             );
           })}
         </div>
-        {/* Barra de underline animada */}
         <div
           className='absolute bottom-[-8px] h-[1.5px] bg-gray-400 transition-all duration-300 ease-out'
           style={{ ...underlineStyle }}

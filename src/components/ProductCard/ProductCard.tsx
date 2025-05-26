@@ -6,11 +6,8 @@ import { Link } from 'react-router-dom';
 
 const ProductCard = ({ product, isFavorited, onToggleFavorite }: ProductCardProps) => {
   const badgeColors = [
-    // 'bg-green-500', // Um verde fresco e limpo
-    // 'bg-purple-500', // Um roxo vibrante mas não gritante
-    // 'bg-teal-500',
-    'bg-pink-500', // Um rosa mais suave
-    'bg-indigo-500', // Um azul mais profundo
+    'bg-pink-500', // Rosa mais suave
+    'bg-indigo-500', // Azul mais forte
   ];
   // Função para retornar uma cor de badge baseada no índice (para alternar as cores)
   const getBadgeColor = (index: number): string => {
@@ -29,7 +26,7 @@ const ProductCard = ({ product, isFavorited, onToggleFavorite }: ProductCardProp
           />
         </Link>
 
-        {/* Badges (mantidos, mas pode remover se quiser um minimalismo extremo) */}
+        {/* Badge */}
         <div className='absolute top-3 left-3 flex flex-col gap-1'>
           {product.badges.map((badge, index) => (
             <span
@@ -56,16 +53,12 @@ const ProductCard = ({ product, isFavorited, onToggleFavorite }: ProductCardProp
 
       {/* Content */}
       <div className='p-4 pt-3 flex flex-col flex-grow'>
-        {/* Preço e Preço Original (com ajuste para desconto diagonal) */}
         <div className='flex items-baseline mb-2'>
           <span className='text-xl font-bold text-gray-900'>R$ {product.price.toFixed(2)}</span>
           {product.originalPrice && product.originalPrice > product.price && (
-            // Preço original com riscado diagonal - REFACTOR AQUI
             <span className='relative ml-2 text-sm text-gray-500 inline-block px-1'>
-              {/* Adicionado inline-block e px-1 */}
               R$ {product.originalPrice.toFixed(2)}
               <span className='absolute left-1/2 top-1/2 w-full h-px bg-red-500 transform -translate-x-1/2 -translate-y-1/2 -rotate-12'></span>
-              {/* Centraliza e depois rotaciona */}
             </span>
           )}
         </div>
@@ -79,28 +72,21 @@ const ProductCard = ({ product, isFavorited, onToggleFavorite }: ProductCardProp
           </h3>
         </div>
 
-        {/* Espaçamento flexível para empurrar os elementos abaixo para o fundo */}
         <div className='flex-grow' />
 
-        {/* Linha com Chip de Avaliação e Botões de Ação */}
         <div className='flex items-center justify-between border-t border-gray-100 pt-4 mt-4'>
-          {/* Chip de Avaliação */}
           <div className='flex items-center bg-yellow-500 px-2 py-1 rounded-full gap-1 mr-4'>
             <AiFillStar className='w-4 h-4 text-white' />
             <span className='text-white text-sm font-semibold'>{product.rating.toFixed(1)}</span>
           </div>
 
-          {/* Botões de Ação */}
           <div className='flex gap-3 items-center'>
-            {/* Botão "Ver Detalhes" (somente texto clicável) */}
             <Link
               to={`/product/${product.id}`}
               className='text-gray-400 hover:text-gray-800 font-medium text-sm transition-colors duration-200 py-1 px-2 hover:cursor-pointer'
             >
               Ver Detalhes
             </Link>
-
-            {/* Botão "Adicionar ao Carrinho" Circular */}
             <button
               onClick={product.onAddToCart}
               className='w-10 h-10 bg-orange-500 text-white rounded-full transition-colors duration-300 flex items-center justify-center shadow-md hover:shadow-lg transform hover:scale-110 hover:cursor-pointer'

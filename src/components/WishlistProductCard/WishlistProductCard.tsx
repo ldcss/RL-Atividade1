@@ -46,7 +46,6 @@ const WishlistProductCard = ({
 
   return (
     <div className='bg-white rounded-lg shadow-md hover:shadow-lg overflow-hidden max-w-sm mx-auto hover:scale-105 transform transition-transform duration-300'>
-      {/* Image Container */}
       <div className='relative group-hover:opacity-75 hover:cursor-pointer'>
         <Link to={`/product/${product.id}`}>
           <img
@@ -56,7 +55,6 @@ const WishlistProductCard = ({
           />
         </Link>
 
-        {/* Badges */}
         <div className='absolute top-3 left-3 flex flex-col gap-1'>
           {product.badges.map((badge, index) => (
             <span key={index} className='bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-md shadow-sm'>
@@ -65,7 +63,6 @@ const WishlistProductCard = ({
           ))}
         </div>
 
-        {/* Remove from Favorites Button */}
         <button
           onClick={() => onToggleFavorite(product.id)}
           className='absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105 hover:cursor-pointer'
@@ -74,7 +71,6 @@ const WishlistProductCard = ({
         </button>
       </div>
 
-      {/* Content */}
       <div className='p-4'>
         {/* Title and Price */}
         <div className='flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2'>
@@ -100,8 +96,6 @@ const WishlistProductCard = ({
             {product.category}
           </span>
         </div>
-
-        {/* Description */}
         <p className='text-gray-600 text-sm mb-4 line-clamp-3'>{product.description}</p>
 
         {/* Buy Button */}

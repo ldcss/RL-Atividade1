@@ -24,7 +24,6 @@ const CartPopup = ({ isOpen, onClose, onItemClick, onContinueShopping }: CartPop
 
   return (
     <>
-      {/* Backdrop */}
       <div
         className={`fixed inset-0 bg-black/50 z-40 transition-opacity duration-300 ${
           isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
@@ -32,7 +31,6 @@ const CartPopup = ({ isOpen, onClose, onItemClick, onContinueShopping }: CartPop
         onClick={onClose}
       />
 
-      {/* Popup */}
       <div
         className={`fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50 transform transition-transform duration-300 ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
@@ -52,7 +50,6 @@ const CartPopup = ({ isOpen, onClose, onItemClick, onContinueShopping }: CartPop
           </button>
         </div>
 
-        {/* Content */}
         <div className='flex flex-col h-full'>
           {groupedCartItems.length === 0 ? (
             /* Empty Cart */
@@ -88,7 +85,6 @@ const CartPopup = ({ isOpen, onClose, onItemClick, onContinueShopping }: CartPop
                       />
                     </button>
 
-                    {/* Content */}
                     <div className='flex-1 min-w-0'>
                       <button
                         onClick={() => onItemClick(item)}
@@ -96,20 +92,6 @@ const CartPopup = ({ isOpen, onClose, onItemClick, onContinueShopping }: CartPop
                       >
                         <h4 className='font-medium text-gray-900 text-sm line-clamp-2'>{item.title}</h4>
                       </button>
-
-                      {/* Variants
-                      {(item.size || item.color) && (
-                        <div className='flex gap-2 mt-1'>
-                          {item.size && (
-                            <span className='text-xs text-gray-500 bg-white px-2 py-1 rounded'>Tam: {item.size}</span>
-                          )}
-                          {item.color && (
-                            <span className='text-xs text-gray-500 bg-white px-2 py-1 rounded'>Cor: {item.color}</span>
-                          )}
-                        </div>
-                      )} */}
-
-                      {/* Price and Quantity */}
                       <div className='flex items-center justify-between mt-2'>
                         <div className='flex flex-col'>
                           <span className='font-semibold text-green-600 text-sm'>R$ {item.price.toFixed(2)}</span>
@@ -120,7 +102,6 @@ const CartPopup = ({ isOpen, onClose, onItemClick, onContinueShopping }: CartPop
                           )}
                         </div>
 
-                        {/* Quantity Controls */}
                         <div className='flex items-center gap-2'>
                           <button
                             onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
@@ -140,7 +121,6 @@ const CartPopup = ({ isOpen, onClose, onItemClick, onContinueShopping }: CartPop
                       </div>
                     </div>
 
-                    {/* Remove Button */}
                     <button
                       onClick={() => removeItem(item.id)}
                       className='flex-shrink-0 p-2 hover:bg-red-100 rounded-lg transition-colors duration-200 group hover:cursor-pointer'

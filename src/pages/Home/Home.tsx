@@ -11,7 +11,7 @@ export const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(categoryFromUrl);
   const { favItems, toggleFavorite, addToCart } = useShop();
 
-  // Novo estado para controlar a transição
+  // Estado para controlar a transição
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [displayedProducts, setDisplayedProducts] = useState(
     selectedCategory ? products.filter(product => product.category === selectedCategory) : products,
@@ -19,12 +19,9 @@ export const Home = () => {
 
   // Efeito para filtrar produtos e gerenciar a animação
   useEffect(() => {
-    // 1. Inicia a transição de saída (fade out)
     setIsTransitioning(true);
 
-    // 2. Define um tempo limite para permitir a animação de saída
     const transitionTimeout = setTimeout(() => {
-      // 3. Atualiza a URL da categoria
       if (selectedCategory) {
         setSearchParams({ category: selectedCategory });
       } else {
@@ -32,17 +29,15 @@ export const Home = () => {
         setSearchParams(searchParams);
       }
 
-      // 4. Atualiza os produtos exibidos
+      //Atualiza os produtos exibidos
       const newFilteredProducts = selectedCategory
         ? products.filter(product => product.category === selectedCategory)
         : products;
       setDisplayedProducts(newFilteredProducts);
 
-      // 5. Permite a transição de entrada (fade in)
       setIsTransitioning(false);
-    }, 400); // Duração da animação de saída (300ms)
+    }, 400);
 
-    // Limpa o timeout se o componente for desmontado ou se a categoria mudar novamente
     return () => clearTimeout(transitionTimeout);
   }, [selectedCategory, setSearchParams, searchParams]); // Dependências: categoria selecionada e searchParams
 
