@@ -72,7 +72,7 @@ const Wishlist = ({ favoriteProductsIds, onToggleFavorite, onAddToCart, onAddAll
             <nav className='text-sm text-gray-600'>
               <Link to='/' className='hover:text-gray-900'>
                 Home
-              </Link>{' '}
+              </Link>
               <span className='mx-2'>/</span> <span className='text-gray-900'>Meus Favoritos</span>
             </nav>
           </div>
@@ -106,7 +106,7 @@ const Wishlist = ({ favoriteProductsIds, onToggleFavorite, onAddToCart, onAddAll
           <nav className='text-sm text-gray-600'>
             <Link to='/' className='hover:text-gray-900'>
               Home
-            </Link>{' '}
+            </Link>
             <span className='mx-2'>/</span> <span className='text-gray-900'>Meus Favoritos</span>
           </nav>
         </div>

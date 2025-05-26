@@ -43,7 +43,7 @@ export default function CartPopup({
       <div
         className={`fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50 transform transition-transform duration-300 ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
+        } min-h-0`}
       >
         {/* Header */}
         <div className='flex items-center justify-between p-4 border-b'>
@@ -51,7 +51,10 @@ export default function CartPopup({
             <BsCart3 className='w-5 h-5' />
             Carrinho ({items.length})
           </h2>
-          <button onClick={onClose} className='p-2 hover:bg-gray-100 rounded-full transition-colors duration-200'>
+          <button
+            onClick={onClose}
+            className='p-2 hover:bg-gray-100 rounded-full transition-colors duration-200 hover:cursor-pointer'
+          >
             <AiOutlineClose className='w-5 h-5 text-gray-500' />
           </button>
         </div>
@@ -66,7 +69,7 @@ export default function CartPopup({
               <p className='text-gray-500 mb-6'>Adicione alguns produtos para começar suas compras</p>
               <button
                 onClick={onContinueShopping}
-                className='bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors duration-200'
+                className='bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors duration-200 hover:cursor-pointer'
               >
                 Continuar Comprando
               </button>
@@ -128,7 +131,7 @@ export default function CartPopup({
                         <div className='flex items-center gap-2'>
                           <button
                             onClick={() => onUpdateQuantity(item.id, Math.max(1, item.quantity - 1))}
-                            className='p-1 hover:bg-white rounded transition-colors duration-200'
+                            className='p-1 hover:bg-white rounded transition-colors duration-200 hover:cursor-pointer'
                             disabled={item.quantity <= 1}
                           >
                             <BsDash className='w-3 h-3 text-gray-600' />
@@ -136,7 +139,7 @@ export default function CartPopup({
                           <span className='text-sm font-medium min-w-[20px] text-center'>{item.quantity}</span>
                           <button
                             onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
-                            className='p-1 hover:bg-white rounded transition-colors duration-200'
+                            className='p-1 hover:bg-white rounded transition-colors duration-200 hover:cursor-pointer'
                           >
                             <BsPlus className='w-3 h-3 text-gray-600' />
                           </button>
@@ -147,7 +150,7 @@ export default function CartPopup({
                     {/* Remove Button */}
                     <button
                       onClick={() => onRemoveItem(item.id)}
-                      className='flex-shrink-0 p-2 hover:bg-red-100 rounded-lg transition-colors duration-200 group'
+                      className='flex-shrink-0 p-2 hover:bg-red-100 rounded-lg transition-colors duration-200 group hover:cursor-pointer'
                     >
                       <BsTrash className='w-4 h-4 text-gray-400 group-hover:text-red-500' />
                     </button>
@@ -156,7 +159,7 @@ export default function CartPopup({
               </div>
 
               {/* Summary */}
-              <div className='border-t bg-white p-4 space-y-3'>
+              <div className='border-t bg-white p-4 space-y-3 flex-shrink-0'>
                 <div className='space-y-2 text-sm'>
                   <div className='flex justify-between'>
                     <span className='text-gray-600'>Subtotal</span>
@@ -181,13 +184,13 @@ export default function CartPopup({
                 <div className='space-y-2'>
                   <button
                     onClick={onCheckout}
-                    className='w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200'
+                    className='w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 hover:cursor-pointer'
                   >
                     Finalizar Compra
                   </button>
                   <button
                     onClick={onContinueShopping}
-                    className='w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors duration-200'
+                    className='w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors duration-200 hover:cursor-pointer'
                   >
                     Continuar Comprando
                   </button>

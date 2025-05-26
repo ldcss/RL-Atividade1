@@ -84,17 +84,27 @@ const ProductCard = ({ product, isFavorited, onToggleFavorite }: ProductCardProp
           <span className='text-sm text-gray-500'>({product.reviewCount} avaliações)</span>
         </div>
 
-        {/* Description */}
+        {/* Descrição */}
         <p className='text-gray-600 text-sm mb-4 line-clamp-3'>{product.description}</p>
 
-        {/* Buy Button */}
-        <button
-          onClick={product.onAddToCart}
-          className='w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 hover:cursor-pointer'
-        >
-          <BsCart3 className='w-5 h-5' />
-          Adicionar ao Carrinho
-        </button>
+        {/* Botões do produto */}
+        <div className='flex gap-2'>
+          {/* Botão "Ver informações do produto" */}
+          <Link
+            to={`/produto/${product.id}`}
+            className='flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-4 rounded-lg transition-colors duration-200 hover:cursor-pointer'
+          >
+            Ver Informações
+          </Link>
+
+          {/* Botão "Adicionar ao Carrinho" */}
+          <button
+            onClick={product.onAddToCart}
+            className='w-12 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-colors duration-200 flex items-center justify-center hover:cursor-pointer'
+          >
+            <BsCart3 className='w-5 h-5' />
+          </button>
+        </div>
       </div>
     </div>
   );

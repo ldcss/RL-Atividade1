@@ -13,9 +13,21 @@ export default function CategoryFilter({ onCategorySelect, selectedCategory }: C
 
   return (
     <div className='w-full max-w-6xl mx-auto p-4'>
-      <div className='mb-6'>
-        <h2 className='text-2xl font-bold text-gray-900 mb-2'>Categorias</h2>
-        <p className='text-gray-600'>Explore nossos produtos por categoria</p>
+      <div className='flex items-center justify-between'>
+        <div className='mb-6'>
+          <h2 className='text-2xl font-bold text-gray-900 mb-2'>Categorias</h2>
+          <p className='text-gray-600'>Explore nossos produtos por categoria</p>
+        </div>
+        {/* Botão "Limpar filtro" */}
+        {activeCategory && (
+          <button
+            onClick={() => handleCategoryClick(activeCategory)}
+            className='inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors duration-200 hover:cursor-pointer'
+          >
+            <span className='mr-2'>✕</span>
+            Limpar filtro
+          </button>
+        )}
       </div>
 
       <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4'>
@@ -74,19 +86,6 @@ export default function CategoryFilter({ onCategorySelect, selectedCategory }: C
           );
         })}
       </div>
-
-      {/* Clear filter button */}
-      {activeCategory && (
-        <div className='mt-6 text-center'>
-          <button
-            onClick={() => handleCategoryClick(activeCategory)}
-            className='inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors duration-200 hover:cursor-pointer'
-          >
-            <span className='mr-2'>✕</span>
-            Limpar filtro
-          </button>
-        </div>
-      )}
     </div>
   );
 }

@@ -1,17 +1,19 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import ProductDetail from './pages/ProductDetail/ProductDetail';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Navbar from './components/Navbar/Navbar';
 import CartPopup from './components/CartPopup/CartPopup';
 import { products } from './utils/productsData';
 import type { ProductInCart } from './types/ProductInCart';
 import Wishlist from './pages/Wishlist/Wishlist';
+import { parseArrayOfNumbers } from './utils/parseArrayOfNumbers';
 
 function App() {
   const [favItems, setFavItems] = useState<number[]>([]); // Favorite Products IDs
   const [cartItems, setCartItems] = useState<number[]>([]); // Favorite Products IDs
   const [isCartOpen, setIsCartOpen] = useState(false); // Trigger Cart Popup
+  const [isInitialized, setIsInitialized] = useState(false); //
 
   // Atualiza a quantidade de um produto no carrinho
   const handleUpdateQuantity = (id: number, quantity: number) => {
@@ -29,6 +31,41 @@ function App() {
     setCartItems(prev => prev.filter(itemId => itemId !== id));
   };
 
+  const handleToggleFavorite = (id: number) => {
+    setFavItems(prev => (prev.includes(id) ? prev.filter(favId => favId !== id) : [...prev, id]));
+  };
+
+  const handleToggleCart = (id: number) => {
+    setCartItems(prev => (prev.includes(id) ? prev.filter(cartId => cartId !== id) : [...prev, id]));
+  };
+
+  useEffect(() => {
+    if (isInitialized) {
+      localStorage.setItem('favItems', JSON.stringify(favItems));
+    }
+  }, [favItems, isInitialized]);
+
+  useEffect(() => {
+    if (isInitialized) {
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    }
+  }, [cartItems, isInitialized]);
+
+  // Carrega dados salvos do localStorage ao iniciar
+  useEffect(() => {
+    const savedFavs = localStorage.getItem('favItems');
+    const savedCart = localStorage.getItem('cartItems');
+
+    if (savedFavs) {
+      setFavItems(parseArrayOfNumbers(localStorage.getItem('favItems')));
+    }
+
+    if (savedCart) {
+      setCartItems(parseArrayOfNumbers(localStorage.getItem('cartItems')));
+    }
+    setIsInitialized(true);
+  }, []);
+
   return (
     <BrowserRouter>
       <div className='min-h-screen flex flex-col'>
@@ -40,7 +77,21 @@ function App() {
               <Home favItems={favItems} cartItems={cartItems} setFavItems={setFavItems} setCartItems={setCartItems} />
             }
           />
-          <Route path='/produto/:produtoId' element={<ProductDetail />} />
+          <Route
+            path='/produto/:produtoId'
+            element={
+              <ProductDetail
+                images={[]} // ou passe imagens relevantes
+                specifications={{}}
+                reviews={[]} // ou passe reviews relevantes
+                onAddReview={review => {}}
+                onToggleCart={handleToggleCart}
+                onToggleFavorite={handleToggleFavorite}
+                favItems={favItems}
+                cartItems={cartItems}
+              />
+            }
+          />
           <Route
             path='/wishlist'
             element={

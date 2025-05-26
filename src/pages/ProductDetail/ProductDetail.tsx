@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import type React from 'react';
 import { useEffect, useState } from 'react';
 import { AiOutlineHeart, AiFillHeart, AiFillStar, AiOutlineStar } from 'react-icons/ai';
@@ -10,7 +10,16 @@ import type { ProductDetailProps } from '../../types/ProductDetailProps';
 import StarRating from '../../components/StarRating/StarRating';
 import ImageGallery from '../../components/ImageGallery/ImageGallery';
 
-const ProductDetail = ({ images = [], specifications = {}, reviews = [], onAddReview }: ProductDetailProps) => {
+const ProductDetail = ({
+  images = [],
+  specifications = {},
+  reviews = [],
+  onAddReview,
+  onToggleCart,
+  onToggleFavorite,
+  cartItems,
+  favItems,
+}: ProductDetailProps) => {
   const { produtoId } = useParams();
   const [productIndex, setProductIndex] = useState(-1);
   const [product, setProduct] = useState<Product | undefined>(undefined);
@@ -79,8 +88,14 @@ const ProductDetail = ({ images = [], specifications = {}, reviews = [], onAddRe
       <div className='bg-white border-b'>
         <div className='max-w-6xl mx-auto px-4 py-3'>
           <nav className='text-sm text-gray-600'>
-            <span>Home</span> <span className='mx-2'>/</span>
-            <span>{product?.category}</span> <span className='mx-2'>/</span>
+            <Link to={'/'}>
+              <span>Home</span>
+            </Link>
+            <span className='mx-2'>/</span>
+            <Link to={'/?category=accessories'}>
+              <span>{product?.category}</span>
+            </Link>
+            <span className='mx-2'>/</span>
             <span className='text-gray-900'>{product?.title}</span>
           </nav>
         </div>
@@ -153,18 +168,18 @@ const ProductDetail = ({ images = [], specifications = {}, reviews = [], onAddRe
 
               <div className='flex gap-3'>
                 <button
-                  onClick={product?.onAddToCart}
+                  onClick={() => product && onToggleCart(product.id)}
                   className='flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2'
                 >
                   <BsCart3 className='w-5 h-5' />
-                  {product?.isOnCart ? 'No Carrinho' : 'Adicionar ao Carrinho'}
+                  {product && cartItems.includes(product.id) ? 'No Carrinho' : 'Adicionar ao Carrinho'}
                 </button>
 
                 <button
-                  onClick={product?.onFavorite}
+                  onClick={() => product && onToggleFavorite(product.id)}
                   className='p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200'
                 >
-                  {product?.isFavorite ? (
+                  {product && favItems.includes(product.id) ? (
                     <AiFillHeart className='w-6 h-6 text-red-500' />
                   ) : (
                     <AiOutlineHeart className='w-6 h-6 text-gray-600' />
