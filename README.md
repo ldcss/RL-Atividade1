@@ -1,54 +1,82 @@
-# React + TypeScript + Vite
+# RocketShop
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Site de e-commerce criado para a primeira atividade do RocketLab.
 
-Currently, two official plugins are available:
+## Como rodar o projeto
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Pré-requisitos
 
-## Expanding the ESLint configuration
+- [Node.js](https://nodejs.org/) (recomendado v18 ou superior)
+- [pnpm](https://pnpm.io/) (gerenciador de pacotes)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Instalação
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
+1. **Clone o repositório:**
+
+   ```bash
+   git clone https://github.com/ldcss/RL-Atividade1.git
+   cd RL-Atividade1
+   ```
+
+2. **Instale as dependências:**
+
+   ```bash
+   pnpm install
+   ```
+
+### Rodando a aplicação
+
+Inicie o servidor de desenvolvimento:
+
+```bash
+pnpm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+A aplicação estará disponível em [http://localhost:5173](http://localhost:5173).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
+## Estrutura do Projeto
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-});
-```
+- src/pages: Contém todas as páginas do website.
+- src/components: Todos os componentes que são reutilizados em páginas ou outros componentes.
+- src/hooks: Hooks customizadas criadas para uso no projeto.
+- src/types: Tipagem utilizada no projeto (props, tipos que simulam dto's e etc.).
+- src/utils: Funções que são utilizadas pelos componentes, além de possuir os dados mockados utilizados no sistema.
+
+## Funcionalidades
+
+- Listagem de produtos por categorias.
+- Possibilidade de favoritar produtos e filtragem por ordem de preço, alfabética e etc.
+- Página de detalhes do produto com imagem, número de avaliações (mockado), compartilhamento, possibilidade de fazer uma avaliação (não é salva) e etc.
+- Popup de carrinho com informações acerca da compra total.
+- Formulário de validação de compra que utiliza a biblioteca React Hook Form.
+- Persistência de itens no carrinho e itens favoritados que utiliza o local storage.
+- Layout responsivo.
+
+## Principais bibliotecas utilizadas
+
+- Tailwind, ESLint, Prettier, React Dom, React Hook Form, React Icons
+
+## Principais hooks utilizadas
+
+- useState: Gerenciamento de estados para re-renderização de componentes.
+- useEffect: Efeito colateral após renderização de componente ou atualização de estado.
+- useMemo: Otimização de desempenho, memorizando resultados de funções.
+- useRef: Criar referência a um elemento DOM (searchbar).
+- useContext: Criar contexto do website (itens favoritados e no carrinho), além de atualizar os itens no local storage.
+
+### Custom Hooks
+
+- useShop: Manipula itens e funções que antes eram passadas entre diversos componentes, mitigando o Prop drilling
+- useDebounce: Utiliza hooks nativas para implementar busca em tempo real na searchbar.
+
+## Design
+
+O Design foi inspirado em referências no Pinterest e Freepik, buscando a simplicidade em funcionalidades, UI e cores.
+
+## Uso de IA
+
+No projeto foram utilizados o Github Copilot e Google Gemini, para economizar esforço na estilização de componentes mais complexos utilizando Tailwind, além da resolução de problemas e erros no código.
+
+---
+
+O projeto foi criado utilizado [React](https://react.dev/), [TypeScript](https://www.typescriptlang.org/) e [Vite](https://vitejs.dev/).
