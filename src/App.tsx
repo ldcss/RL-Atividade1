@@ -6,20 +6,21 @@ import Navbar from './components/Navbar/Navbar';
 import CartPopup from './components/CartPopup/CartPopup';
 import Wishlist from './pages/Wishlist/Wishlist';
 import CheckoutForm from './pages/CheckoutForm/CheckoutForm';
-import { ShopProvider } from './components/ShopContext/ShopContext';
+import { ShopProvider } from './hooks/ShopContext/ShopContext';
 
 function App() {
-  const [isCartOpen, setIsCartOpen] = useState(false); // Trigger Cart Popup
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   return (
     <ShopProvider>
       <BrowserRouter>
-        <div className='min-h-screen flex flex-col'>
+        {/* Usando bg-gray-50 ou bg-white para um fundo limpo */}
+        <div className='min-h-screen flex flex-col bg-gray-50 font-sans antialiased'>
           <Navbar onCartClick={() => setIsCartOpen(true)} />
           <Routes>
             <Route path='/' element={<Home />} />
             <Route
-              path='/produto/:produtoId'
+              path='/product/:produtoId'
               element={
                 <ProductDetail
                   onAddReview={review => {

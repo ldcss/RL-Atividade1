@@ -6,7 +6,7 @@ import PersonalDataStep from '../../components/PersonalDataStep/PersonalDataStep
 import CheckoutHeader from '../../components/CheckoutHeader/CheckoutHeader';
 import ConfirmationStep from '../../components/ConfirmationStep/ConfirmationStep';
 import OrderSummary from '../../components/OrderSummary/OrderSummary';
-import { useShop } from '../../components/ShopContext/ShopContext';
+import { useShop } from '../../hooks/ShopContext/ShopContext';
 import { parseCartItems } from '../../utils/parsedCartItems';
 import { useNavigate } from 'react-router-dom';
 import SuccessPopup from '../../components/SuccessPopup/SuccessPopup';
@@ -88,8 +88,6 @@ const CheckoutForm = () => {
     console.log('Pedido finalizado:', data);
   };
 
-  console.log('cartItems no CheckoutForm:', cartItems);
-  console.log('parsedCartItems:', parsedCartItems);
   return (
     <div className='min-h-screen bg-gray-50'>
       <SuccessPopup visible={showPopup} /> {/* renderize o popup */}

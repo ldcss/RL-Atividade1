@@ -2,7 +2,7 @@ import { BsCart3, BsPlus, BsDash, BsTrash } from 'react-icons/bs';
 import { AiOutlineClose } from 'react-icons/ai';
 import type { ProductInCart } from '../../types/ProductInCart';
 import { useNavigate } from 'react-router-dom';
-import { useShop } from '../ShopContext/ShopContext';
+import { useShop } from '../../hooks/ShopContext/ShopContext';
 import { getGroupedCartItems } from '../../utils/getGroupedCartItems';
 
 interface CartPopupProps {
@@ -169,7 +169,7 @@ const CartPopup = ({ isOpen, onClose, onItemClick, onContinueShopping }: CartPop
                   )}
                   <div className='flex justify-between text-base font-semibold pt-2 border-t'>
                     <span>Total</span>
-                    <span className='text-green-600'>R$ {total.toFixed(2)}</span>
+                    <span>R$ {total.toFixed(2)}</span>
                   </div>
                 </div>
 

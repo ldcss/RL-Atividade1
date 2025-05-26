@@ -1,51 +1,41 @@
 import type { ProductCardProps } from '../../types/ProductCardProps';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { BsCart3 } from 'react-icons/bs';
-import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
+import { AiFillStar } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
 const ProductCard = ({ product, isFavorited, onToggleFavorite }: ProductCardProps) => {
-  const renderStars = (rating: number) => {
-    const stars = [];
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 !== 0;
-
-    for (let i = 0; i < 5; i++) {
-      if (i < fullStars) {
-        stars.push(<AiFillStar key={i} className='w-4 h-4 text-yellow-500' />);
-      } else if (i === fullStars && hasHalfStar) {
-        stars.push(
-          <div key={i} className='relative'>
-            <AiOutlineStar className='w-4 h-4 text-gray-300' />
-            <div className='absolute inset-0 overflow-hidden w-1/2'>
-              <AiFillStar className='w-4 h-4 text-yellow-500' />
-            </div>
-          </div>,
-        );
-      } else {
-        stars.push(<AiOutlineStar key={i} className='w-4 h-4 text-gray-300' />);
-      }
-    }
-
-    return stars;
+  const badgeColors = [
+    // 'bg-green-500', // Um verde fresco e limpo
+    // 'bg-purple-500', // Um roxo vibrante mas não gritante
+    // 'bg-teal-500',
+    'bg-pink-500', // Um rosa mais suave
+    'bg-indigo-500', // Um azul mais profundo
+  ];
+  // Função para retornar uma cor de badge baseada no índice (para alternar as cores)
+  const getBadgeColor = (index: number): string => {
+    return badgeColors[index % badgeColors.length];
   };
 
   return (
-    <div className='bg-white rounded-lg shadow-md hover:shadow-lg overflow-hidden max-w-sm mx-auto hover:scale-105 transform transition-transform duration-300'>
+    <div className='bg-white rounded-xl shadow-md hover:shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 flex flex-col'>
       {/* Image Container */}
-      <div className='relative group-hover:opacity-75 hover:cursor-pointer'>
-        <Link to={`/produto/${product.id}`}>
+      <div className='relative overflow-hidden'>
+        <Link to={`/product/${product.id}`} className='block'>
           <img
             src={product.image || '/placeholder.svg'}
             alt={product.title}
-            className='w-full h-48 sm:h-56 object-cover cursor-pointer'
+            className='w-full h-48 object-cover rounded-t-xl transition-transform duration-300 hover:scale-110'
           />
         </Link>
 
-        {/* Badges */}
+        {/* Badges (mantidos, mas pode remover se quiser um minimalismo extremo) */}
         <div className='absolute top-3 left-3 flex flex-col gap-1'>
           {product.badges.map((badge, index) => (
-            <span key={index} className='bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-md shadow-sm'>
+            <span
+              key={index}
+              className={`${getBadgeColor(index)} text-white text-xs font-semibold px-2 py-0.5 rounded-md shadow-sm opacity-90`}
+            >
               {badge}
             </span>
           ))}
@@ -54,56 +44,70 @@ const ProductCard = ({ product, isFavorited, onToggleFavorite }: ProductCardProp
         {/* Favorite Button */}
         <button
           onClick={onToggleFavorite}
-          className='absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105 hover:cursor-pointer'
+          className='absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-300'
         >
           {isFavorited ? (
-            <AiFillHeart className='w-5 h-5 text-red-500' />
+            <AiFillHeart className='w-5 h-5 text-red-500 hover:cursor-pointer' />
           ) : (
-            <AiOutlineHeart className='w-5 h-5 text-gray-400 hover:text-red-500 transition-colors duration-200' />
+            <AiOutlineHeart className='w-5 h-5 text-gray-400 hover:text-red-500 transition-colors duration-200 hover:cursor-pointer' />
           )}
         </button>
       </div>
 
       {/* Content */}
-      <div className='p-4'>
-        {/* Title and Price */}
-        <div className='flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2'>
-          <h3 className='text-lg font-semibold text-gray-900 line-clamp-2 flex-1'>{product.title}</h3>
-          <div className='flex flex-col items-start sm:items-end'>
-            <span className='text-xl font-bold text-green-600'>R$ {product.price.toFixed(2)}</span>
-            {product.originalPrice && product.originalPrice > product.price && (
-              <span className='text-sm text-gray-500 line-through'>R$ {product.originalPrice.toFixed(2)}</span>
-            )}
+      <div className='p-4 pt-3 flex flex-col flex-grow'>
+        {/* Preço e Preço Original (com ajuste para desconto diagonal) */}
+        <div className='flex items-baseline mb-2'>
+          <span className='text-xl font-bold text-gray-900'>R$ {product.price.toFixed(2)}</span>
+          {product.originalPrice && product.originalPrice > product.price && (
+            // Preço original com riscado diagonal - REFACTOR AQUI
+            <span className='relative ml-2 text-sm text-gray-500 inline-block px-1'>
+              {/* Adicionado inline-block e px-1 */}
+              R$ {product.originalPrice.toFixed(2)}
+              <span className='absolute left-1/2 top-1/2 w-full h-px bg-red-500 transform -translate-x-1/2 -translate-y-1/2 -rotate-12'></span>
+              {/* Centraliza e depois rotaciona */}
+            </span>
+          )}
+        </div>
+
+        {/* Título do Produto */}
+        <div className='h-12'>
+          <h3 className='text-lg font-semibold text-gray-900 line-clamp-2 leading-tight overflow-hidden'>
+            <Link to={`/product/${product.id}`} className='hover:text-blue-600 transition-colors duration-200'>
+              {product.title}
+            </Link>
+          </h3>
+        </div>
+
+        {/* Espaçamento flexível para empurrar os elementos abaixo para o fundo */}
+        <div className='flex-grow' />
+
+        {/* Linha com Chip de Avaliação e Botões de Ação */}
+        <div className='flex items-center justify-between border-t border-gray-100 pt-4 mt-4'>
+          {/* Chip de Avaliação */}
+          <div className='flex items-center bg-yellow-500 px-2 py-1 rounded-full gap-1 mr-4'>
+            <AiFillStar className='w-4 h-4 text-white' />
+            <span className='text-white text-sm font-semibold'>{product.rating.toFixed(1)}</span>
           </div>
-        </div>
 
-        {/* Rating and Reviews */}
-        <div className='flex items-center gap-2 mb-3'>
-          <div className='flex items-center gap-1'>{renderStars(product.rating)}</div>
-          <span className='text-sm font-medium text-gray-700'>{product.rating.toFixed(1)}</span>
-          <span className='text-sm text-gray-500'>({product.reviewCount} avaliações)</span>
-        </div>
+          {/* Botões de Ação */}
+          <div className='flex gap-3 items-center'>
+            {/* Botão "Ver Detalhes" (somente texto clicável) */}
+            <Link
+              to={`/product/${product.id}`}
+              className='text-gray-400 hover:text-gray-800 font-medium text-sm transition-colors duration-200 py-1 px-2 hover:cursor-pointer'
+            >
+              Ver Detalhes
+            </Link>
 
-        {/* Descrição */}
-        <p className='text-gray-600 text-sm mb-4 line-clamp-3'>{product.description}</p>
-
-        {/* Botões do produto */}
-        <div className='flex gap-2'>
-          {/* Botão "Ver informações do produto" */}
-          <Link
-            to={`/produto/${product.id}`}
-            className='flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-4 rounded-lg transition-colors duration-200 hover:cursor-pointer'
-          >
-            Ver Informações
-          </Link>
-
-          {/* Botão "Adicionar ao Carrinho" */}
-          <button
-            onClick={product.onAddToCart}
-            className='w-12 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-colors duration-200 flex items-center justify-center hover:cursor-pointer'
-          >
-            <BsCart3 className='w-5 h-5' />
-          </button>
+            {/* Botão "Adicionar ao Carrinho" Circular */}
+            <button
+              onClick={product.onAddToCart}
+              className='w-10 h-10 bg-orange-500 text-white rounded-full transition-colors duration-300 flex items-center justify-center shadow-md hover:shadow-lg transform hover:scale-110 hover:cursor-pointer'
+            >
+              <BsCart3 className='w-5 h-5' />
+            </button>
+          </div>
         </div>
       </div>
     </div>

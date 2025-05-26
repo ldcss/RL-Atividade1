@@ -48,7 +48,7 @@ const WishlistProductCard = ({
     <div className='bg-white rounded-lg shadow-md hover:shadow-lg overflow-hidden max-w-sm mx-auto hover:scale-105 transform transition-transform duration-300'>
       {/* Image Container */}
       <div className='relative group-hover:opacity-75 hover:cursor-pointer'>
-        <Link to={`/produto/${product.id}`}>
+        <Link to={`/product/${product.id}`}>
           <img
             src={product.image || '/placeholder.svg'}
             alt={product.title}
