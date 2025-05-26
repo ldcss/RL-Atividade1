@@ -13,4 +13,5 @@ export interface ProductDetailProps {
   onToggleFavorite: (id: number) => void;
   favItems: number[];
   cartItems: number[];
+  onUpdateCartQuantity: (productId: number, quantity: number) => void;
 }

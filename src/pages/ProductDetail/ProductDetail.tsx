@@ -19,12 +19,13 @@ const ProductDetail = ({
   onToggleFavorite,
   cartItems,
   favItems,
+  onUpdateCartQuantity,
 }: ProductDetailProps) => {
   const { produtoId } = useParams();
   const [productIndex, setProductIndex] = useState(-1);
   const [product, setProduct] = useState<Product | undefined>(undefined);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(0);
   const [activeTab, setActiveTab] = useState<'description' | 'specifications' | 'reviews'>('description');
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [newReview, setNewReview] = useState({ rating: 5, comment: '' });
@@ -81,6 +82,24 @@ const ProductDetail = ({
       </div>
     );
   };
+
+  useEffect(() => {
+    if (produtoId) {
+      const id = Number(produtoId);
+      setProduct(products.find(p => p.id === id));
+      setProductIndex(products.findIndex(p => p.id === id));
+
+      // Conta quantas vezes o produto aparece no carrinho
+      const currentQuantity = cartItems.filter(item => item === id).length;
+      setQuantity(currentQuantity > 0 ? currentQuantity : 1); // padrão 1 se não estiver no carrinho
+    }
+  }, [produtoId, cartItems]);
+
+  // useEffect(() => {
+  //   if (product?.id) {
+  //     onUpdateCartQuantity(product.id, quantity);
+  //   }
+  // }, [quantity]);
 
   return (
     <div className='min-h-screen bg-gray-50'>
@@ -168,11 +187,14 @@ const ProductDetail = ({
 
               <div className='flex gap-3'>
                 <button
-                  onClick={() => product && onToggleCart(product.id)}
-                  className='flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 hover:cursor-pointer'
+                  onClick={() => product && onUpdateCartQuantity(product.id, quantity)}
+                  className='flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 hover:cursor-pointer  text-gray-600 hover:text-gray-900 disabled:opacity-50 disabled:cursor-not-allowed'
+                  disabled={cartItems.includes(product?.id || 0) && quantity > 0}
                 >
                   <BsCart3 className='w-5 h-5' />
-                  {product && cartItems.includes(product.id) ? 'No Carrinho' : 'Adicionar ao Carrinho'}
+                  {cartItems.includes(product?.id || 0) && quantity > 0
+                    ? 'Adicionado ao carrinho'
+                    : 'Adicionar ao carrinho'}
                 </button>
 
                 <button

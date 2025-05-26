@@ -41,6 +41,14 @@ function App() {
     setCartItems(prev => (prev.includes(id) ? prev.filter(cartId => cartId !== id) : [...prev, id]));
   };
 
+  const handleUpdateCartQuantity = (productId: number, quantity: number) => {
+    setCartItems(prev => {
+      const filtered = prev.filter(id => id !== productId);
+      const newItems = Array(quantity).fill(productId);
+      return [...filtered, ...newItems];
+    });
+  };
+
   useEffect(() => {
     if (isInitialized) {
       localStorage.setItem('favItems', JSON.stringify(favItems));
@@ -91,6 +99,7 @@ function App() {
                 onToggleFavorite={handleToggleFavorite}
                 favItems={favItems}
                 cartItems={cartItems}
+                onUpdateCartQuantity={handleUpdateCartQuantity}
               />
             }
           />
