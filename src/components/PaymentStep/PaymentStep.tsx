@@ -12,7 +12,7 @@ interface PaymentStepProps {
   getValues: any;
 }
 
-const PaymentStep = ({ control, errors, paymentMethod, getValues }: PaymentStepProps) => {
+const PaymentStep = ({ control, errors, paymentMethod }: PaymentStepProps) => {
   return (
     <div className='space-y-6'>
       <h2 className='text-lg font-medium text-gray-900 mb-6'>Forma de Pagamento</h2>

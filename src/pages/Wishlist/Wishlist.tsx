@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { BsCart3, BsFilter, BsShare } from 'react-icons/bs'; // Removido BsGrid3X3Gap, BsList
+import { BsCart3, BsFilter, BsShare } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { products } from '../../utils/productsData';
 import ProductCard from '../../components/ProductCard/ProductCard';
