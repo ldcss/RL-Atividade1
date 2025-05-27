@@ -34,6 +34,8 @@ pnpm run dev
 
 A aplicação estará disponível em [http://localhost:5173](http://localhost:5173).
 
+Ou simplesmente acesse [https://rocket-shop-kappa.vercel.app/](https://rocket-shop-kappa.vercel.app/)
+
 ## Estrutura do Projeto
 
 - src/pages: Contém todas as páginas do website.
