@@ -1,5 +1,6 @@
 import type { Review } from './Review';
-interface ReviewInput {
+
+export interface ReviewInput {
   rating: number;
   comment: string;
 }
